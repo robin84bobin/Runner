@@ -1,0 +1,29 @@
+{
+	"Root":
+	{
+		"Inventory":
+		{
+			"Gold":0,
+			"Star":0
+		},
+		"Levels":
+		{
+			"Level 1":
+			{
+				"HeroName":"Hero 1",
+				"LevelName":"Level 1"
+			},
+			"Level 2":
+			{
+				"HeroName":"Hero 2",
+				"LevelName":"Level 2"
+			},
+			"Level 3":
+			{
+				"HeroName":"Hero 3",
+				"LevelName":"Level 3"
+			}
+		}
+			
+	}
+}

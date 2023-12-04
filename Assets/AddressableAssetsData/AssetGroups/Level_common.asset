@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Level_common
+  m_EditorClassIdentifier: 
+  m_GroupName: Level_common
+  m_GUID: 7b160ef19e530834db3cb177c2115fc8
+  m_SerializeEntries:
+  - m_GUID: d87b5d91e3b41c54b8b2e1d975bf0d8e
+    m_Address: Hero Base
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eb447288676d0ef4e8428f44adebc551
+    m_Address: LowPolyFoodLiteTexture_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: df7fe48a4062d5448bff2a0f1470487e
+    m_Address: LP_FoodLite_MAIN
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adb2f20aa957c364e9a392a9214ef5d6
+    m_Address: LP_FoodLite_BG
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: d9f35f9a7f56ed445a58dc1bc0b87b1a, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6046d0ad2974c054da901f330e697b60, type: 2}
+    - {fileID: 11400000, guid: 5ee821d8d6cea374fa20416d886915f1, type: 2}
