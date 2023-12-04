@@ -10,7 +10,7 @@ namespace Data.User
     public class UserDataRepository : BaseDataRepository, IFixedTickable
     {
 
-        public  DataStorage<UserCurrency> Currency;
+        // public  DataStorage<UserCurrency> Currency;
 
         public UserDataRepository(IDataProxyService dbProxyService, CatalogDataRepository catalogDataRepository,
             IResourcesService resourceService) : 
@@ -74,7 +74,7 @@ namespace Data.User
 
         private void SaveAll()
         {
-            Currency.SaveData();
+            // Currency.SaveData();
             // ShopItems.SaveData();
             // FarmItems.SaveData();
             // Products.SaveData();

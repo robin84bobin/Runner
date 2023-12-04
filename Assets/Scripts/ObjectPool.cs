@@ -1,70 +1,55 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 
 [Serializable]
 public class PoolData
 {
-    public GameObject prefab;
+    public PoolableBehaviour prefab;
     public int poolAmount;
 }
 
 public class ObjectPool : MonoBehaviour
 {
+    [SerializeField] private GameObject containerObject;
+    [SerializeField] private PoolData[] poolDataList;
 
-    public static ObjectPool instance;
-
-    public PoolData[] poolDataList;
-
-    private Dictionary<string, List<GameObject>> _poolObjectsMap;
-    private Dictionary<string, GameObject> _objectsMap;
+    private Dictionary<string, List<PoolableBehaviour>> _poolObjectsMap;
+    private Dictionary<string, PoolableBehaviour> _objectsMap;
 
     public GameObject[] objectPrefabs;
 
-    public List<GameObject>[] pooledObjects;
+    public List<PoolableBehaviour>[] pooledObjects;
 
     public int[] amountToBuffer;
 
     public int defaultBufferAmount = 5;
 
-    protected GameObject containerObject;
 
-    void Awake()
-    {
-        instance = this;
-    }
-
-    // Use this for initialization
     void Start()
     {
-        containerObject = new GameObject("ObjectPool");
-        containerObject.transform.SetParent( gameObject.transform);
-        DontDestroyOnLoad(containerObject);
-
-        initPoolMap();
+        DontDestroyOnLoad(gameObject);
+        InitPoolMap();
      }
 
-    private void initPoolMap()
+    private void InitPoolMap()
     {
         //create pool map
-        _poolObjectsMap = new Dictionary<string, List<GameObject>>();
-        _objectsMap = new Dictionary<string, GameObject>();
+        _poolObjectsMap = new Dictionary<string, List<PoolableBehaviour>>();
+        _objectsMap = new Dictionary<string, PoolableBehaviour>();
 
         foreach (var data in poolDataList)
         {
             if (data.prefab == null)
-            {
                 continue;
-            }
 
-            _poolObjectsMap.Add(data.prefab.name, new List<GameObject>());
+            _poolObjectsMap.Add(data.prefab.name, new List<PoolableBehaviour>());
             _objectsMap.Add(data.prefab.name, data.prefab);
 
             int amount = data.poolAmount > 0 ? data.poolAmount : defaultBufferAmount;
             for (int i = 0; i < amount; i++)
             {
-                GameObject newObj = Instantiate(data.prefab) as GameObject;
+                PoolableBehaviour newObj = Instantiate(data.prefab);
                 newObj.name = data.prefab.name;
                 PoolObject(newObj);
             }
@@ -72,24 +57,24 @@ public class ObjectPool : MonoBehaviour
     }
 
 
-    public GameObject GetObject(string objectType, bool onlyPooled = false)
+    public PoolableBehaviour GetObject(string objectType, bool onlyPooled = false)
     {
-
         if (_poolObjectsMap.ContainsKey(objectType))
         {
             if (_poolObjectsMap[objectType].Count > 0)
             {
-                GameObject pooledObject = _poolObjectsMap[objectType][0];
+                PoolableBehaviour pooledObject = _poolObjectsMap[objectType][0];
                 _poolObjectsMap[objectType].RemoveAt(0);
                 pooledObject.transform.parent = null;
-                pooledObject.SetActive(true);
-                pooledObject.SendMessage("OnGetFromPool", SendMessageOptions.DontRequireReceiver);
+                pooledObject.gameObject.SetActive(true);
+                pooledObject.OnGetFromPool();
                 return pooledObject;
             }
-            else if (!onlyPooled)
+
+            if (!onlyPooled)
             {
-                GameObject go = Instantiate(_objectsMap[objectType]) as GameObject;
-                go.SendMessage("OnGetFromPool", SendMessageOptions.DontRequireReceiver);
+                PoolableBehaviour go = Instantiate(_objectsMap[objectType]) as PoolableBehaviour;
+                go.OnGetFromPool();
                 return go;
             }
            
@@ -98,11 +83,11 @@ public class ObjectPool : MonoBehaviour
         return null;
     }
 
-    public bool PoolObject(GameObject obj, bool destroyIfNotPooled = true)
+    public bool PoolObject(PoolableBehaviour obj, bool destroyIfNotPooled = true)
     {
         if (_poolObjectsMap.ContainsKey(obj.name))
         {
-            obj.SetActive(false);
+            obj.gameObject.SetActive(false);
             obj.transform.parent = containerObject.transform;
             _poolObjectsMap[obj.name].Add(obj);
             return true;
@@ -115,4 +100,12 @@ public class ObjectPool : MonoBehaviour
         return false;
     }
 
+}
+
+public class PoolableBehaviour : MonoBehaviour
+{
+    public void OnGetFromPool()
+    {
+        
+    }
 }

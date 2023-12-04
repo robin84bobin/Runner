@@ -51,7 +51,6 @@
      <Compile Include="Assets\Scripts\Gameplay\Spawn\SpawnHeroComponent.cs" />
      <Compile Include="Assets\Scripts\Data\Proxy\IDataProxyService.cs" />
      <Compile Include="Assets\Scripts\Services\GamePlay\GameplayInput\MobileGameInputService.cs" />
-     <Compile Include="Assets\Scripts\Gameplay\Gravity\GroundCheckComponent.cs" />
      <Compile Include="Assets\Scripts\Data\User\UserDataRepository.cs" />
      <Compile Include="Assets\Scripts\Commands\Data\InitStorageCommand.cs" />
      <Compile Include="Assets\Scripts\Data\Catalog\PartSpawnInfo.cs" />
@@ -93,7 +92,6 @@
      <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
      <Compile Include="Assets\Scripts\Commands\Command.cs" />
      <Compile Include="Assets\Scripts\Common\StateSwitcher\IBaseState.cs" />
-     <Compile Include="Assets\Scripts\Data\User\UserCurrency.cs" />
      <Compile Include="Assets\Scripts\Data\Catalog\LevelData.cs" />
      <Compile Include="Assets\Scripts\Installers\Project\ProjectStandaloneInstaller.cs" />
      <Folder Include="Assets" />
@@ -131,7 +129,6 @@
      <Folder Include="Assets\Scripts\Bootstrap" />
      <Folder Include="Assets\Scripts\Gameplay" />
      <Folder Include="Assets\Scripts\Installers" />
-     <Folder Include="Assets\Scripts\Gameplay\Gravity" />
      <Folder Include="Assets\Fonts" />
      <Folder Include="Assets\Bundles\Level 1" />
      <Folder Include="Assets\AddressableAssetsData\DataBuilders" />
