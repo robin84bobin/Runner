@@ -106,7 +106,10 @@ namespace Data.Proxy
             {
                 item.Type = collection;
                 Debug.Log(collection + " : " + item.Id);
-                itemsDict.Add(item.Id, item);
+                if (!itemsDict.TryAdd(item.Id, item))
+                {
+                    Debug.LogError($"Cant add {item.Type}, Id={item.Id} to data storage. Id already exist");
+                }
             }
             return itemsDict;
         }

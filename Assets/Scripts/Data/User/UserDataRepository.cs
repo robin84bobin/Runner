@@ -7,14 +7,8 @@ using Zenject;
 
 namespace Data.User
 {
-    public class UserDataRepository : Repository.BaseDataRepository, IFixedTickable
+    public class UserDataRepository : BaseDataRepository, IFixedTickable
     {
-        public const string CURRENCY = "currency";
-        public const string SHOP = "shop";
-        public const string PRODUCTS = "products";
-        public const string FARM_ITEMS = "farmItems";
-        public const string CELLS = "cells";
-        public const string GRID = "grid";
 
         public  DataStorage<UserCurrency> Currency;
 
@@ -39,20 +33,20 @@ namespace Data.User
 
         protected override void CreateStorages()
         {
-            Currency = CreateStorage<UserCurrency>(CURRENCY);
+            //Currency = CreateStorage<UserCurrency>(CURRENCY);
             // Currency = CreateStorage<UserCurrency>(CURRENCY);
             // Currency = CreateStorage<UserCurrency>(CURRENCY);
         }
 
         private void InitStartValuesFrom(CatalogDataRepository catalogData)
         {
-            foreach (Currency currency in catalogData.Currency.GetAll())
-            {
-                UserCurrency c = new UserCurrency(){Type = currency.Type, CatalogDataId = currency.Id, Value = currency.Value};
-                Currency.Set(c, currency.Id, true);
-            }
+            // foreach (Currency currency in catalogData.Currency.GetAll())
+            // {
+                // UserCurrency c = new UserCurrency(){Type = currency.Type, CatalogDataId = currency.Id, Value = currency.Value};
+                // Currency.Set(c, currency.Id, true);
+            // }
             
-            SaveAll();
+            // SaveAll();
         }
 
         private static bool _needSave;

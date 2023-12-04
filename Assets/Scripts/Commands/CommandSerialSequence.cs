@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using ModestTree;
 
 namespace Commands
 {
@@ -18,6 +19,13 @@ namespace Commands
         {
             _commandsCount = _queue.Count;
             _commandsCompleted = 0;
+
+            if (_queue.IsEmpty())
+            {
+                Complete();
+                return;
+            }
+            
             await ExecuteNextCommand();
         }
 

@@ -1,29 +1,139 @@
 {
-	"Root":
-	{
-		"Inventory":
-		{
-			"Gold":0,
-			"Star":0
-		},
-		"Levels":
-		{
-			"Level 1":
-			{
-				"HeroName":"Hero 1",
-				"LevelName":"Level 1"
-			},
-			"Level 2":
-			{
-				"HeroName":"Hero 2",
-				"LevelName":"Level 2"
-			},
-			"Level 3":
-			{
-				"HeroName":"Hero 3",
-				"LevelName":"Level 3"
-			}
-		}
-			
-	}
+  "Root": {
+    "Levels": [
+      {
+        "id": 1,
+        "parts": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ],
+        "bonuses": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "parts": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ],
+        "bonuses": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "parts": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ],
+        "bonuses": [
+          {
+            "id": 1,
+            "weight": 1
+          },
+          {
+            "id": 2,
+            "weight": 1
+          },
+          {
+            "id": 3,
+            "weight": 1
+          }
+        ]
+      }
+    ],
+    "Bonuses": [
+      {
+        "id": 1,
+        "abilitiesIds": [1]
+      },
+      {
+        "id": 2,
+        "abilitiesIds": [2]
+      },
+      {
+        "id": 3,
+        "abilitiesIds": [3]
+      }
+    ],
+    "Abilities": [
+      {
+        "id": 1,
+        "title": "relax, man!",
+        "value": 0.5,
+        "modifierType": "multiply",
+        "duration": 10,
+        "description": "slow down for {0} seconds"
+      },
+      {
+        "id": 2,
+        "title": "cheetah blood",
+        "value": 2,
+        "modifierType": "add",
+        "duration": 10,
+        "description": "speed up for {0} seconds"
+      },
+      {
+        "id": 3,
+        "title": "pegeon",
+        "value": 2,
+        "modifierType": "add",
+        "duration": 10,
+        "description": "fly for {0} seconds"
+      }
+    ]
+  }
 }
