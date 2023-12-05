@@ -39,14 +39,16 @@ namespace Services
             throw new NotImplementedException();
         }
 
-        public UniTask<GameObject> LoadPrefab(string path)
+        public async UniTask<GameObject> LoadPrefab(string path)
         {
-            throw new NotImplementedException();
+            var o = await Resources.LoadAsync<GameObject>(path).ToUniTask();
+            return o as GameObject;
         }
 
-        public UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
+        public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
         {
-            throw new NotImplementedException();
+            var go = await LoadPrefab(prefabName);
+            return GameObject.Instantiate(go, position, quaternion, parent);
         }
 
         private bool IsFileExist(string path)

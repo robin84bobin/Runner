@@ -27,6 +27,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0a6a2491386b3be489501ed9d6f51b69
+    m_Address: Assets/Bundles/Level 3/Banana.fbx
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: d9f35f9a7f56ed445a58dc1bc0b87b1a, type: 2}
   m_SchemaSet:

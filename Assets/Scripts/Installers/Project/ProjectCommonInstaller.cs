@@ -22,7 +22,7 @@ namespace Installers.Project
 
         private void BindGameplayServices()
         {
-            Container.Bind<GameplayLevelService>().AsSingle();
+            Container.Bind<GameLevelService>().AsSingle();
         }
 
         private void BindResourcesService()

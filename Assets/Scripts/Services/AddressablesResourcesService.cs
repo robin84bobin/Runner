@@ -2,6 +2,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace Services
@@ -21,7 +22,7 @@ namespace Services
             return t.text;
         }
 
-        public async UniTask<T> LoadComponentFromPrefab<T>(string path) where T:UnityEngine.Object
+        public async UniTask<T> LoadComponentFromPrefab<T>(string path) where T:Object
         {
             var handle = Addressables.LoadAssetAsync<GameObject>(path);
             var gameObject =  await handle.Task;
@@ -36,9 +37,10 @@ namespace Services
             return gameObject;
         }
 
-        public UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
+        public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
         {
-            throw new System.NotImplementedException();
+            var instantiationParameters = new InstantiationParameters(position, quaternion, parent);
+            return await Addressables.InstantiateAsync(prefabName, instantiationParameters).ToUniTask();
         }
     }
 }

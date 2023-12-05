@@ -1,14 +1,19 @@
 ﻿using Services.GameplayInput;
+using UnityEngine;
 using Zenject;
 
 namespace Installers.Gameplay
 {
     public class GameplayInstaller : MonoInstaller
     {
+        [SerializeField] private ObjectPool _objectPool;
+        
         public override void InstallBindings()
         {
             BindPlatformInput();
             BindModel();
+            Container.BindInterfacesAndSelfTo<ScrollController>().AsSingle();
+            Container.Bind<ObjectPool>().FromInstance(_objectPool).AsSingle();
         }
 
 #if UNITY_ANDROID || UNITY_IOS

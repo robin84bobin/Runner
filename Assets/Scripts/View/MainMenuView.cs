@@ -14,8 +14,7 @@ namespace View
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Inject] private GameplayLevelService GameplayLevelService;
-        [Inject] public IResourcesService ResourcesService;
+        [Inject] private GameLevelService _gameLevelService;
         [Inject] public CatalogDataRepository CatalogDataRepository;
     
         [SerializeField] private Button startButtonTemplate;
@@ -51,8 +50,7 @@ namespace View
 
         private void LoadLevel(string levelId = "1")
         {
-            GameplayLevelService.StartLevel(levelId);
-           
+            _gameLevelService.StartLevel(levelId);
         }
 
         void OnDestroy()

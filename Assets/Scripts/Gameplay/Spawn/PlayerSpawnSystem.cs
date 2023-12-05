@@ -24,7 +24,7 @@ namespace Gameplay.Spawn
         public async UniTask Execute()
         {
             var quaternion = Quaternion.Euler(_rotation);
-            var r = await _resourcesService.Instantiate(_prefabName, _position, quaternion, _parent);
+            
         }
     }
 }
