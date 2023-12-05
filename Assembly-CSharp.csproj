@@ -52,6 +52,7 @@
      <Compile Include="Assets\Scripts\Data\Proxy\IDataProxyService.cs" />
      <Compile Include="Assets\Scripts\Services\GamePlay\GameplayInput\MobileGameInputService.cs" />
      <Compile Include="Assets\Scripts\Data\User\UserDataRepository.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\GameModel.cs" />
      <Compile Include="Assets\Scripts\Commands\Data\InitStorageCommand.cs" />
      <Compile Include="Assets\Scripts\Data\Catalog\PartSpawnInfo.cs" />
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
@@ -67,6 +68,8 @@
      <Compile Include="Assets\Scripts\Installers\Gameplay\GameplayInstaller.cs" />
      <Compile Include="Assets\Scripts\Data\Repository\DataItem.cs" />
      <Compile Include="Assets\Scripts\Gameplay\Move\MoveComponent.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Level\LevelController.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\IGameModel.cs" />
      <Compile Include="Assets\Scripts\Parameters\Parameter.cs" />
      <Compile Include="Assets\Scripts\Services\IResourcesService.cs" />
      <Compile Include="Assets\Scripts\View\MainMenuView.cs" />
@@ -77,6 +80,7 @@
      <Compile Include="Assets\Scripts\Services\GamePlay\GameplayInput\IGameInputService.cs" />
      <Compile Include="Assets\Scripts\Data\Proxy\JsonDataProxyService.cs" />
      <Compile Include="Assets\Scripts\Installers\Project\ProjectConfig.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Level\LevelModel.cs" />
      <Compile Include="Assets\Scripts\Gameplay\Spawn\PlayerSpawnSystem.cs" />
      <Compile Include="Assets\Scripts\Commands\CommandSerialSequence.cs" />
      <Compile Include="Assets\Scripts\Data\Catalog\CatalogDataRepository.cs" />
@@ -91,8 +95,11 @@
      <Compile Include="Assets\Scripts\Services\GamePlay\GameplayInput\StandaloneGameInputService.cs" />
      <Compile Include="Assets\Scripts\Commands\CommandManager.cs" />
      <Compile Include="Assets\Scripts\Commands\Command.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\GameController.cs" />
      <Compile Include="Assets\Scripts\Common\StateSwitcher\IBaseState.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Hero\HeroController.cs" />
      <Compile Include="Assets\Scripts\Data\Catalog\LevelData.cs" />
+     <Compile Include="Assets\Scripts\Gameplay\Hero\HeroModel.cs" />
      <Compile Include="Assets\Scripts\Installers\Project\ProjectStandaloneInstaller.cs" />
      <Folder Include="Assets" />
      <Folder Include="Library\BuildInstructions" />
@@ -110,6 +117,7 @@
      <Folder Include="Assets\Bundles" />
      <Folder Include="Assets\Scripts\Services\GamePlay\GameplayInput" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <Folder Include="Assets\Scripts\Gameplay\Hero" />
      <Folder Include="Assets\Scripts\Installers\Project" />
      <Folder Include="Assets\AddressableAssetsData" />
      <Folder Include="Assets\LowPolyFoodLite\Prefabs" />
@@ -139,6 +147,7 @@
      <Folder Include="Assets\TextMesh Pro" />
      <Folder Include="Assets\Scripts\Data\Proxy" />
      <None Include="Assets\TextMesh Pro\Shaders\SDFFunctions.hlsl" />
+     <Folder Include="Assets\Scripts\Gameplay\Level" />
      <Folder Include="Assets\Bundles\Level 2" />
      <Folder Include="Assets\Scripts\Common" />
      <Folder Include="Assets\LowPolyFoodLite" />

@@ -9,14 +9,14 @@ namespace Installers.Gameplay
         public override void InstallBindings()
         {
             BindPlatformInput();
+            Container.Bind<IGameModel>().To<GameModel>().AsSingle();
         }
 
 #if UNITY_ANDROID || UNITY_IOS
         
         private void BindPlatformInput()
         {
-            Container.Bind<IGameInputService>().To<MobileGameInputService>().AsCached();
-            Container.Bind<IDisposable>().To<MobileGameInputService>().AsCached();
+            Container.BindInterfacesTo<MobileGameInputService>().AsCached();
         }
         
 #elif UNITY_EDITOR || UNITY_STANDALONE

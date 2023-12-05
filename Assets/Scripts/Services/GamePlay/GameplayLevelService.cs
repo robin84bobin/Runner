@@ -1,13 +1,24 @@
-﻿namespace Services.GamePlay
+﻿using Data.Catalog;
+
+namespace Services.GamePlay
 {
     public class GameplayLevelService
     {
-        private int _level;
-        public string GetHeroPrefabName => $"Hero{_level}";
+        private readonly CatalogDataRepository _catalogDataRepository;
+        private string _levelId;
+        
+        public string HeroPrefabName => $"Hero{_levelId}";
+        public LevelData CurrentLevelData => _catalogDataRepository.Levels.Get(_levelId);
+
+
+        public GameplayLevelService(CatalogDataRepository catalogDataRepository)
+        {
+            _catalogDataRepository = catalogDataRepository;
+        }
 
         public void SetupLevel(int level)
         {
-            _level = level;
+            _levelId = level.ToString();
         }
     }
 }

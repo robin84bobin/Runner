@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: 
   m_GroupName: Level_1
+  m_Data:
+    m_SerializedData: []
   m_GUID: 76144b9271df29449b6351b6aa3e8e8e
   m_SerializeEntries:
-  - m_GUID: 73d683b1358634e48b02e8a02e15890c
-    m_Address: Level 1
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 54a0a4a59a298924385adf95977a1dae
     m_Address: Hero1
     m_ReadOnly: 0

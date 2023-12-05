@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Level_2
   m_EditorClassIdentifier: 
   m_GroupName: Level_2
+  m_Data:
+    m_SerializedData: []
   m_GUID: e666ddbb74a5c8a4a84e2963069a7fdb
   m_SerializeEntries:
-  - m_GUID: 2b45fa2209afe4b4c98defa7ae036db4
-    m_Address: Level 2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aa7a7f86756d6264089705ff022c30c0
     m_Address: Avocado
     m_ReadOnly: 0
