@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 869b55c0dc2962d41a835b0eeb3c4b36
+guid: 5bef41f8151d12e47b88b8ec00bc0b63
 PrefabImporter:
   externalObjects: {}
   userData: 
@@ -10,5 +10,5 @@ AssetOrigin:
   productId: 258693
   packageName: Low Poly Food Lite
   packageVersion: 1.0
-  assetPath: Assets/Bundles/Level 3/Banana.prefab
+  assetPath: Assets/LowPolyFoodLite/Prefabs/Broccoli.prefab
   uploadId: 594901

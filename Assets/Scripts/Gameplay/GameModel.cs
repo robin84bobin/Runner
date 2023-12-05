@@ -14,11 +14,11 @@ public class GameModel : IGameModel, ITickable
         _inputService = inputService;
         
         var levelData = gameplayLevelService.CurrentLevelData;
-        this.LevelModel = new LevelModel(levelData);
+        LevelModel = new LevelModel(levelData);
 
 
         var heroPrefabName = gameplayLevelService.HeroPrefabName;
-        this.HeroModel = new HeroModel(heroPrefabName);
+        HeroModel = new HeroModel(heroPrefabName);
     }
 
     public void Tick()

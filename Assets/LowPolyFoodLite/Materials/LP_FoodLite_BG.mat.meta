@@ -1,7 +1,8 @@
 fileFormatVersion: 2
-guid: 869b55c0dc2962d41a835b0eeb3c4b36
-PrefabImporter:
+guid: adb2f20aa957c364e9a392a9214ef5d6
+NativeFormatImporter:
   externalObjects: {}
+  mainObjectFileID: 2100000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -10,5 +11,5 @@ AssetOrigin:
   productId: 258693
   packageName: Low Poly Food Lite
   packageVersion: 1.0
-  assetPath: Assets/Bundles/Level 3/Banana.prefab
+  assetPath: Assets/LowPolyFoodLite/Materials/LP_FoodLite_BG.mat
   uploadId: 594901
