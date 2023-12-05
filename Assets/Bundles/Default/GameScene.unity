@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 8426011095914906481}
   - component: {fileID: 4083462189772577761}
   m_Layer: 3
-  m_Name: LevelBounds
+  m_Name: PartsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

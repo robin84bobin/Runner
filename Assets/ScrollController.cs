@@ -14,7 +14,8 @@ public class ScrollController : ITickable, IInitializable, IDisposable
     private readonly ObjectPool _pool;
 
     private Transform _container;
-    private Vector3 _removeBound = new (0f, -25f, 0f);
+    
+    private Vector3 _partRemoveBound;
    
     //TODO move to config?
     private readonly float _speed = -0.01f;
@@ -40,6 +41,9 @@ public class ScrollController : ITickable, IInitializable, IDisposable
     public async UniTask CreateParts(PartSpawnInfo[] partSpawnInfos, Transform container)
     {
         _container = container;
+
+        var bounds = _container.GetComponent<BoxCollider>().bounds;
+        _partRemoveBound = new Vector3(0, - bounds.size.y, 0);
         
         _parts = new List<ScrollablePart>();
         foreach (var partSpawnInfo in partSpawnInfos)
@@ -111,7 +115,7 @@ public class ScrollController : ITickable, IInitializable, IDisposable
 
     private void CheckRemovePart(ScrollablePart part)
     {
-        if (part.transform.position.y < _removeBound.y)
+        if (part.transform.position.y < _partRemoveBound.y)
         {
             _currentParts.Remove(part);
             GameObject.Destroy(part.gameObject);
