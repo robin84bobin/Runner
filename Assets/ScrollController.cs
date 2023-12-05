@@ -14,9 +14,9 @@ public class ScrollController : ITickable, IInitializable, IDisposable
     private readonly ObjectPool _pool;
 
     private Transform _container;
-    private Vector3 _removeBound = new (0f, -15f, 0f);
+    private Vector3 _removeBound = new (0f, -25f, 0f);
    
-    //move to config?
+    //TODO move to config?
     private readonly float _speed = -0.01f;
     private readonly int _partCnt = 3;
     private float _partSize = 24;
@@ -45,6 +45,8 @@ public class ScrollController : ITickable, IInitializable, IDisposable
         foreach (var partSpawnInfo in partSpawnInfos)
         {
             var partPrefabName = _gameLevelService.GetPartPrefabName(partSpawnInfo.id);
+            
+            //TODO instantiate to pool
             var partGO = await _resourcesService.Instantiate( partPrefabName, 
                                                                         Vector3.zero, 
                                                                         Quaternion.identity, 
@@ -77,6 +79,7 @@ public class ScrollController : ITickable, IInitializable, IDisposable
             nextPartPos = _lastPartPos + _partSize;
         }
 
+        //TODO get from pool
         GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
         partGo.transform.position = new Vector3(_container.position.x, nextPartPos, _container.position.z); ;
         partGo.transform.rotation = _container.rotation;
@@ -108,7 +111,7 @@ public class ScrollController : ITickable, IInitializable, IDisposable
 
     private void CheckRemovePart(ScrollablePart part)
     {
-        if (part.transform.position.x < _removeBound.x)
+        if (part.transform.position.y < _removeBound.y)
         {
             _currentParts.Remove(part);
             GameObject.Destroy(part.gameObject);

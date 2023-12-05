@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2076003526823315710, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2323408370930224975, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812945755462136128, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3011371658043425498, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -48,9 +60,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3807841424049277921, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4008559363059752430, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5450928689769217614, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5671711729039556038, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6487536112715228649, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
       propertyPath: m_Name
-      value: Part
+      value: Part1 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8568102657385100961, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8849232336488435475, guid: 17250d09d9b61354390eed38d92a5edd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
