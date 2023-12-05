@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 196743367}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.014702695, z: -0.318}
+  m_LocalPosition: {x: 0, y: 3.35, z: -8.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -360,7 +360,7 @@ Transform:
   m_GameObject: {fileID: 1157135106}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.5, y: 7.7, z: 5.4}
+  m_LocalPosition: {x: 0, y: 0, z: -14.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -534,8 +534,8 @@ Transform:
   m_GameObject: {fileID: 1786464716}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 9.5331, y: 7.7014, z: 21.2827}
-  m_LocalScale: {x: 13.5228615, y: 0.1835, z: 23.94065}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 196743368}
@@ -596,7 +596,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8426011095914906481}
-  - component: {fileID: 3004885638795633679}
   - component: {fileID: 4083462189772577761}
   m_Layer: 3
   m_Name: LevelBounds
@@ -605,14 +604,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!33 &3004885638795633679
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 517321712567673922}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!65 &4083462189772577761
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -632,8 +623,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 13.605409, y: 1, z: 24.025396}
+  m_Center: {x: 0.050882816, y: 8.294136e-17, z: -0.025413513}
 --- !u!4 &8426011095914906481
 Transform:
   m_ObjectHideFlags: 0

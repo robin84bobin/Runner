@@ -11,7 +11,7 @@ public class PoolData
 
 public class ObjectPool : MonoBehaviour
 {
-    [SerializeField] private GameObject containerObject;
+    [SerializeField] public GameObject containerObject;
     [SerializeField] private PoolData[] poolDataList;
 
     private Dictionary<string, List<PoolableBehaviour>> _poolObjectsMap;

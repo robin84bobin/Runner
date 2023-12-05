@@ -23,7 +23,7 @@ public class ScrollablePart: MonoBehaviour
 
     public void Move(float speed)
     {
-        transform.position += new Vector3(speed, 0f, 0f);
+        transform.position += new Vector3(0f, speed, 0f);
         Vector3 newPos = transform.position + new Vector3(speed, 0f, 0f);
     }
 

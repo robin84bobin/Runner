@@ -27,23 +27,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 17250d09d9b61354390eed38d92a5edd
+  - m_GUID: 8b33941727f04bc43a8c6b8f5442c8f2
     m_Address: Part1 1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e44968b2799342c4d902342bb178fecb
-    m_Address: Part1 2
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: dec5d7fd41986824e925d891bd79e014
+  - m_GUID: 4957df5ab8546f345ba20e81bd603cc2
     m_Address: Part1 3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce50d892b0d9ae3479c7c6b27e3f6412
+    m_Address: Part1 2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 12bf7c0de8c3b5b4bb67f4f585d5a093
-    m_Address: Assets/Bundles/Level 1/Apple.fbx
+    m_Address: Apple
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

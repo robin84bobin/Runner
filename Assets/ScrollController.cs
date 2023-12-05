@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;
@@ -6,19 +7,19 @@ using Services;
 using Services.GamePlay;
 using Zenject;
 
-public class ScrollController : ITickable
+public class ScrollController : ITickable, IInitializable, IDisposable
 {
     private readonly IResourcesService _resourcesService;
     private readonly GameLevelService _gameLevelService;
     private readonly ObjectPool _pool;
 
     private Transform _container;
-    private Vector3 _removeBound = new Vector3(-15, 0f, 0f);
+    private Vector3 _removeBound = new (0f, -15f, 0f);
    
     //move to config?
     private readonly float _speed = -0.01f;
     private readonly int _partCnt = 3;
-    private float _partSize;
+    private float _partSize = 24;
 
     private List<ScrollablePart> _parts;
     private List<ScrollablePart> _currentParts;
@@ -26,7 +27,7 @@ public class ScrollController : ITickable
     float _lastPartPos = 0f;
     int _lastPartIndex = -1;
     
-    bool start = false;
+    bool IsInitialised = false;
 
 
     public ScrollController(IResourcesService resourcesService, GameLevelService gameLevelService, ObjectPool pool)
@@ -44,9 +45,14 @@ public class ScrollController : ITickable
         foreach (var partSpawnInfo in partSpawnInfos)
         {
             var partPrefabName = _gameLevelService.GetPartPrefabName(partSpawnInfo.id);
-            var partGO = await _resourcesService.Instantiate(partPrefabName, container.position, container.rotation, container);
+            var partGO = await _resourcesService.Instantiate( partPrefabName, 
+                                                                        Vector3.zero, 
+                                                                        Quaternion.identity, 
+                                                                        _pool.containerObject.transform
+                                                                        );
             ScrollablePart part = partGO.GetComponent<ScrollablePart>();
             _parts.Add(part);
+            part.gameObject.SetActive(false);
         }
         
         _currentParts = new List<ScrollablePart>();
@@ -54,41 +60,43 @@ public class ScrollController : ITickable
         for (int i = 0; i < _partCnt; i++)
         {
             var part = NextPart();
-            CreatePart(part);
+            SpawnPart(part);
         }
 
-        start = true;
+        IsInitialised = true;
     }
 
-    private void CreatePart(ScrollablePart part)
+    private void SpawnPart(ScrollablePart part)
     {
-        float nextPartPos = _container.position.x;
+        float nextPartPos = _container.position.y;
+        
         if (_currentParts.Count > 0)
         {
             var lastPart = _currentParts[_currentParts.Count - 1];
-            _lastPartPos = lastPart.transform.position.x;
+            _lastPartPos = lastPart.transform.position.y;
             nextPartPos = _lastPartPos + _partSize;
         }
 
-        GameObject partGo = GameObject.Instantiate(part.gameObject);
-        partGo.transform.position = new Vector3(nextPartPos, _container.position.y, _container.position.z); ;
-        partGo.transform.rotation = Quaternion.identity;
-
+        GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
+        partGo.transform.position = new Vector3(_container.position.x, nextPartPos, _container.position.z); ;
+        partGo.transform.rotation = _container.rotation;
+        partGo.SetActive(true);
+        
         ScrollablePart newPart = partGo.GetComponent<ScrollablePart>();
         newPart.Init();
+        
         _currentParts.Add(newPart);
-
     }
 
     public void Tick()
     {
-        if (!start) 
+        if (!IsInitialised) 
             return;
 
         for (int i = 0; i < _currentParts.Count; i++)
         {
             var part = _currentParts[i];
-            part.Move(Time.deltaTime / _speed);
+            part.Move(_speed);
             CheckRemovePart(part);
         }
 
@@ -110,12 +118,30 @@ public class ScrollController : ITickable
     private void AddPart()
     {
         var part = NextPart();
-        CreatePart(part);
+        SpawnPart(part);
     }
 
     ScrollablePart NextPart()
     {
         _lastPartIndex = _lastPartIndex++ < _parts.Count - 1 ? _lastPartIndex : 0;
         return _parts[_lastPartIndex];
+    }
+
+    public void Dispose()
+    {
+        IsInitialised = false;
+        
+        foreach (var part in _parts)
+        {
+            //TODO clear from pool  -> unload addressables assets 
+            GameObject.Destroy(part);
+        }
+        _parts = null;
+        _currentParts = null;
+    }
+
+    public void Initialize()
+    {
+        //TODO
     }
 }
