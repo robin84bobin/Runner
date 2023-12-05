@@ -1,5 +1,4 @@
-﻿using System;
-using Services.GameplayInput;
+﻿using Services.GameplayInput;
 using Zenject;
 
 namespace Installers.Gameplay
@@ -9,24 +8,24 @@ namespace Installers.Gameplay
         public override void InstallBindings()
         {
             BindPlatformInput();
-            Container.Bind<IGameModel>().To<GameModel>().AsSingle();
+            BindModel();
         }
 
 #if UNITY_ANDROID || UNITY_IOS
-        
         private void BindPlatformInput()
         {
-            Container.BindInterfacesTo<MobileGameInputService>().AsCached();
+            Container.BindInterfacesTo<MobileGameInputService>().AsSingle();
         }
-        
 #elif UNITY_EDITOR || UNITY_STANDALONE
-
         private void BindPlatformInput()
         {
             Container.Bind<IGameInputService>().To<StandaloneGameInputService>().AsSingle();
         }
-        
 #endif
 
+        private void BindModel()
+        {
+            Container.BindInterfacesTo<GameModel>().AsSingle();
+        }
     }
 }

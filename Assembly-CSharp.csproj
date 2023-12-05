@@ -58,7 +58,6 @@
      <Compile Include="Assets\Scripts\ObjectPool.cs" />
      <Compile Include="Assets\Scripts\Common\Timer.cs" />
      <Compile Include="Assets\Scripts\Data\User\UserDataItem.cs" />
-     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
      <Compile Include="Assets\Scripts\Services\AddressablesResourcesService.cs" />
      <Compile Include="Assets\Scripts\Parameters\ParamInfo.cs" />
      <Compile Include="Assets\Fonts\Script\scriptTexttest.cs" />
@@ -113,7 +112,6 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
      <Folder Include="Assets\Resources" />
      <Folder Include="Assets\TextMesh Pro\Resources\Sprite Assets" />
-     <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\Bundles" />
      <Folder Include="Assets\Scripts\Services\GamePlay\GameplayInput" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
@@ -168,13 +166,10 @@
      <None Include="Assets\Fonts\Documentation\JazzCreateBubble_VersionHistory_1.1.txt" />
      <Folder Include="Assets\Bundles\Level 3" />
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
-     <Folder Include="Assets\TutorialInfo\Scripts" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
-     <Folder Include="Assets\TutorialInfo\Icons" />
      <Folder Include="Assets\LowPolyFoodLite\Scenes\Settings" />
      <Folder Include="Assets\AddressableAssetsData\Android" />
      <Folder Include="Assets\Scripts\Installers\Gameplay" />
-     <Folder Include="Assets\TutorialInfo" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <Folder Include="Assets\Scripts\Commands" />
      <Folder Include="Assets\Scripts\Data\User" />
