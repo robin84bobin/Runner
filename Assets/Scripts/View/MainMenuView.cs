@@ -1,6 +1,10 @@
+using System.Collections.Generic;
+using System.Linq;
 using Common;
+using Data.Catalog;
 using Services;
 using Services.GamePlay;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -12,37 +16,51 @@ namespace View
     {
         [Inject] private GameplayLevelService GameplayLevelService;
         [Inject] public IResourcesService ResourcesService;
+        [Inject] public CatalogDataRepository CatalogDataRepository;
     
-        [SerializeField] private Button _startButton1;
-        [SerializeField] private Button _startButton2;
-        [SerializeField] private Button _startButton3;
+        [SerializeField] private Button startButtonTemplate;
+        [SerializeField] private Transform buttonsContainer;
+        private Button[] _startButtons;
 
         void Start()
         {
-            _startButton1.onClick.AddListener(() => StartClickHandler(1));
-            _startButton2.onClick.AddListener(() => StartClickHandler(2));
-            _startButton3.onClick.AddListener(() => StartClickHandler(3));
+            CreateButtons();
         }
 
-        private void StartClickHandler(int i)
+        private void CreateButtons()
+        {
+            List<LevelData> levels = CatalogDataRepository.Levels.GetAll().OrderBy(level => level.Id).ToList();
+            int levelsCount = levels.Count;
+
+            _startButtons = new Button[levelsCount];
+            for (var index = 0; index < levels.Count; index++)
+            {
+                var levelData = levels[index];
+                var button = Instantiate(startButtonTemplate, buttonsContainer);
+                button.gameObject.SetActive(true);
+                button.onClick.AddListener(() => StartClickHandler(levelData.Id));
+                button.GetComponentInChildren<TextMeshProUGUI>().text = $"Level {levelData.Id}";
+                _startButtons[index] = button;
+            }
+        }
+
+        private void StartClickHandler(string i)
         {
             LoadLevel(i);
         }
 
-        private void LoadLevel(int levelId = 1)
+        private void LoadLevel(string levelId = "1")
         {
-            GameplayLevelService.SetupLevel(levelId);
-            ResourcesService.LoadScene(AppConstants.Scenes.Game);
-            
-            var levelSceneName = AppConstants.Scenes.Level + levelId;
-            ResourcesService.LoadScene(levelSceneName, LoadSceneMode.Additive);
+            GameplayLevelService.StartLevel(levelId);
+           
         }
 
         void OnDestroy()
         {
-            _startButton1.onClick.RemoveAllListeners();
-            _startButton2.onClick.RemoveAllListeners();
-            _startButton3.onClick.RemoveAllListeners();
+            foreach (var button in _startButtons)
+            {
+                button.onClick.RemoveAllListeners();
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Level_common
   m_EditorClassIdentifier: 
   m_GroupName: Level_common
+  m_Data:
+    m_SerializedData: []
   m_GUID: 7b160ef19e530834db3cb177c2115fc8
   m_SerializeEntries:
   - m_GUID: d87b5d91e3b41c54b8b2e1d975bf0d8e

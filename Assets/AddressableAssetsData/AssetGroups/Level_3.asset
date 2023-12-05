@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Level_3
   m_EditorClassIdentifier: 
   m_GroupName: Level_3
+  m_Data:
+    m_SerializedData: []
   m_GUID: e80827fe530f45d408c8cd44d404b3a7
   m_SerializeEntries:
   - m_GUID: 869b55c0dc2962d41a835b0eeb3c4b36
@@ -22,11 +24,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9e6ba9458e1aa2249a08301c4d63bbf0
     m_Address: Hero3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 45932978781f17249ae75fc71c881701
-    m_Address: Level 3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
