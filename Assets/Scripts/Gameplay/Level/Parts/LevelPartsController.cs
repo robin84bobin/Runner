@@ -114,7 +114,6 @@ public class LevelPartsController : ITickable, IInitializable, IDisposable
         }
     }
     
-    
     private void TryRemovePart(LevelPart part)
     {
         if (_moveStrategy.CheckRemovePart(part))

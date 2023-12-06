@@ -8,7 +8,7 @@ namespace Installers.Project
         [Header("DataConfig:")]
         public string CatalogRoot = "Root";
         
-        public string CatalogPath => "CatalogData";
+        public string CatalogPath = "CatalogData";
         
         public string UserRepositoryPath => Application.persistentDataPath + "/user_{0}.json";
     }
