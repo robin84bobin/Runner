@@ -1,4 +1,3 @@
-using Cysharp.Threading.Tasks;
 using Services;
 using Services.GamePlay;
 using UnityEngine;
@@ -7,7 +6,6 @@ using Zenject;
 public class GameController : MonoBehaviour
 {
     [SerializeField] private LevelController _levelController;
-    
 
     private IGameModel _gameModel;
     private GameLevelService _levelService;
@@ -25,10 +23,7 @@ public class GameController : MonoBehaviour
 
     async void Start()
     {
-        //TODO build level
         await _levelController.BuildLevel();
-        //spawn hero, parts, bonusus
     }
-
    
 }

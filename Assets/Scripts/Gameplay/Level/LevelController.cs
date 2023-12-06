@@ -15,7 +15,7 @@ public class LevelController : MonoBehaviour
     private IResourcesService _resourcesService;
     private GameLevelService _levelService;
     private CatalogDataRepository _catalogDataRepository;
-    private ScrollController _scrollController;
+    private LevelPartsController _levelPartsController;
 
     [Inject]
     public void Construct(
@@ -23,10 +23,10 @@ public class LevelController : MonoBehaviour
         GameLevelService levelService, 
         IResourcesService resourcesService,
         CatalogDataRepository catalogDataRepository,
-        ScrollController scrollController
+        LevelPartsController levelPartsController
         )
     {
-        _scrollController = scrollController;
+        _levelPartsController = levelPartsController;
         _catalogDataRepository = catalogDataRepository;
         _resourcesService = resourcesService;
         _levelService = levelService;
@@ -38,15 +38,15 @@ public class LevelController : MonoBehaviour
         UniTask[] tasks =
         {
             SpawnHero(),
-            SpawnParts(),
+            CreateLevelParts(),
         };
         await UniTask.WhenAll(tasks);
     }
 
-    private async UniTask SpawnParts()
+    private async UniTask CreateLevelParts()
     {
         PartSpawnInfo[] partSpawnInfos = _levelService.CurrentLevelData.parts;
-        await _scrollController.CreateParts(partSpawnInfos, partsContainer);
+        await _levelPartsController.CreateParts(partSpawnInfos, partsContainer);
     }
 
     private async UniTask SpawnHero()

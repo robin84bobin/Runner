@@ -7,11 +7,12 @@ using Services;
 using Services.GamePlay;
 using Zenject;
 
-public class ScrollController : ITickable, IInitializable, IDisposable
+public class LevelPartsController : ITickable, IInitializable, IDisposable
 {
     private readonly IResourcesService _resourcesService;
     private readonly GameLevelService _gameLevelService;
     private readonly ObjectPool _pool;
+    private readonly IMoveLevelPartsStrategy _moveStrategy;
 
     private Transform _container;
     
@@ -22,8 +23,8 @@ public class ScrollController : ITickable, IInitializable, IDisposable
     private readonly int _partCnt = 3;
     private float _partSize = 24;
 
-    private List<ScrollablePart> _parts;
-    private List<ScrollablePart> _currentParts;
+    private List<LevelPart> _parts;
+    private List<LevelPart> _currentParts;
 
     float _lastPartPos = 0f;
     int _lastPartIndex = -1;
@@ -31,37 +32,41 @@ public class ScrollController : ITickable, IInitializable, IDisposable
     bool IsInitialised = false;
 
 
-    public ScrollController(IResourcesService resourcesService, GameLevelService gameLevelService, ObjectPool pool)
+    //TODO inject vertical move parts strategy
+    public LevelPartsController(
+        IResourcesService resourcesService, 
+        GameLevelService gameLevelService, 
+        ObjectPool pool,
+        IMoveLevelPartsStrategy moveStrategy
+        )
     {
         _resourcesService = resourcesService;
         _gameLevelService = gameLevelService;
         _pool = pool;
+        _moveStrategy = moveStrategy;
     }
 
     public async UniTask CreateParts(PartSpawnInfo[] partSpawnInfos, Transform container)
     {
         _container = container;
-
-        var bounds = _container.GetComponent<BoxCollider>().bounds;
-        _partRemoveBound = new Vector3(0, - bounds.size.y, 0);
+        _moveStrategy.Init(_container);
+        _parts = new List<LevelPart>();
         
-        _parts = new List<ScrollablePart>();
         foreach (var partSpawnInfo in partSpawnInfos)
         {
             var partPrefabName = _gameLevelService.GetPartPrefabName(partSpawnInfo.id);
             
             //TODO instantiate to pool
             var partGO = await _resourcesService.Instantiate( partPrefabName, 
-                                                                        Vector3.zero, 
-                                                                        Quaternion.identity, 
+                                                                        Vector3.zero, Quaternion.identity, 
                                                                         _pool.containerObject.transform
                                                                         );
-            ScrollablePart part = partGO.GetComponent<ScrollablePart>();
+            LevelPart part = partGO.GetComponent<LevelPart>();
             _parts.Add(part);
             part.gameObject.SetActive(false);
         }
         
-        _currentParts = new List<ScrollablePart>();
+        _currentParts = new List<LevelPart>();
 
         for (int i = 0; i < _partCnt; i++)
         {
@@ -72,25 +77,15 @@ public class ScrollController : ITickable, IInitializable, IDisposable
         IsInitialised = true;
     }
 
-    private void SpawnPart(ScrollablePart part)
+    private void SpawnPart(LevelPart part)
     {
-        float nextPartPos = _container.position.y;
-        
-        if (_currentParts.Count > 0)
-        {
-            var lastPart = _currentParts[_currentParts.Count - 1];
-            _lastPartPos = lastPart.transform.position.y;
-            nextPartPos = _lastPartPos + _partSize;
-        }
-
-        //TODO get from pool
+       //TODO get from pool
         GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
-        partGo.transform.position = new Vector3(_container.position.x, nextPartPos, _container.position.z); ;
+        LevelPart newPart = partGo.GetComponent<LevelPart>();
+
+        partGo.transform.position = _moveStrategy.GetNewPartPosition(newPart, _currentParts);
         partGo.transform.rotation = _container.rotation;
         partGo.SetActive(true);
-        
-        ScrollablePart newPart = partGo.GetComponent<ScrollablePart>();
-        newPart.Init();
         
         _currentParts.Add(newPart);
     }
@@ -103,32 +98,33 @@ public class ScrollController : ITickable, IInitializable, IDisposable
         for (int i = 0; i < _currentParts.Count; i++)
         {
             var part = _currentParts[i];
-            part.Move(_speed);
-            CheckRemovePart(part);
+            _moveStrategy.Move(part,_speed);
+            TryRemovePart(part);
         }
 
+        TryAddPart();
+    }
+
+    private void TryAddPart()
+    {
         if (_currentParts.Count < _partCnt)
         {
-            AddPart();
+            var part = NextPart();
+            SpawnPart(part);
         }
     }
-
-    private void CheckRemovePart(ScrollablePart part)
+    
+    
+    private void TryRemovePart(LevelPart part)
     {
-        if (part.transform.position.y < _partRemoveBound.y)
+        if (_moveStrategy.CheckRemovePart(part))
         {
             _currentParts.Remove(part);
-            GameObject.Destroy(part.gameObject);
+            GameObject.Destroy(part.gameObject); //TODO to pool 
         }
     }
 
-    private void AddPart()
-    {
-        var part = NextPart();
-        SpawnPart(part);
-    }
-
-    ScrollablePart NextPart()
+    private LevelPart NextPart()
     {
         _lastPartIndex = _lastPartIndex++ < _parts.Count - 1 ? _lastPartIndex : 0;
         return _parts[_lastPartIndex];
@@ -140,8 +136,7 @@ public class ScrollController : ITickable, IInitializable, IDisposable
         
         foreach (var part in _parts)
         {
-            //TODO clear from pool  -> unload addressables assets 
-            GameObject.Destroy(part);
+            GameObject.Destroy(part); //TODO clear from pool  -> unload addressables assets 
         }
         _parts = null;
         _currentParts = null;

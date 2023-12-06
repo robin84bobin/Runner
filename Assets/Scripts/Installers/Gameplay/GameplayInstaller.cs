@@ -12,7 +12,18 @@ namespace Installers.Gameplay
         {
             BindPlatformInput();
             BindModel();
-            Container.BindInterfacesAndSelfTo<ScrollController>().AsSingle();
+            BindObjectPool();
+            BindLevelParts();
+        }
+
+        private void BindLevelParts()
+        {
+            Container.BindInterfacesAndSelfTo<LevelPartsController>().AsSingle();
+            Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
+        }
+
+        private void BindObjectPool()
+        {
             Container.Bind<ObjectPool>().FromInstance(_objectPool).AsSingle();
         }
 
