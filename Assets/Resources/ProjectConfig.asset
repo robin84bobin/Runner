@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CatalogRoot: Root
   CatalogPath: CatalogData
-  DefaultSpeed: -0.01
+  DefaultSpeed: -0.03
   VisibleLevelPartCount: 8
+  MaxBonusCountPerPart: 1

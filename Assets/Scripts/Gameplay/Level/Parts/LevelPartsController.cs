@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using Data.Catalog;
 using Gameplay.Level.Parts.PartsMoving;
 using Services;
@@ -10,13 +11,14 @@ using Zenject;
 
 namespace Gameplay.Level.Parts
 {
-    public class LevelPartsController : ITickable, IInitializable, IDisposable
+    public class LevelPartsController : ITickable, IDisposable
     {
         private readonly IResourcesService _resourcesService;
         private readonly GameCurrentLevelService _gameCurrentLevelService;
         private readonly ObjectPool _pool;
         private readonly IMoveLevelPartsStrategy _moveStrategy;
         private readonly ProjectConfig _config;
+        private readonly CatalogDataRepository _catalogDataRepository;
 
         private Transform _container;
    
@@ -34,7 +36,8 @@ namespace Gameplay.Level.Parts
             GameCurrentLevelService gameCurrentLevelService, 
             ObjectPool pool,
             IMoveLevelPartsStrategy moveStrategy,
-            ProjectConfig config
+            ProjectConfig config,
+            CatalogDataRepository catalogDataRepository
         )
         {
             _resourcesService = resourcesService;
@@ -42,6 +45,7 @@ namespace Gameplay.Level.Parts
             _pool = pool;
             _moveStrategy = moveStrategy;
             _config = config;
+            _catalogDataRepository = catalogDataRepository;
         }
 
         public async UniTask CreateParts(PartSpawnInfo[] partSpawnInfos, Transform container)
@@ -55,10 +59,11 @@ namespace Gameplay.Level.Parts
                 var partPrefabName = _gameCurrentLevelService.GetPartPrefabName(partSpawnInfo.id);
             
                 //TODO instantiate to pool
-                var partGO = await _resourcesService.Instantiate( partPrefabName, 
-                    Vector3.zero, Quaternion.identity, 
-                    _pool.containerObject.transform
-                );
+                var partGO = await _resourcesService.Instantiate( 
+                                                                            partPrefabName, 
+                                                                            Vector3.zero, Quaternion.identity, 
+                                                                            _pool.containerObject.transform
+                                                                            );
                 LevelPart part = partGO.GetComponent<LevelPart>();
                 _parts.Add(part);
                 part.gameObject.SetActive(false);
@@ -69,23 +74,10 @@ namespace Gameplay.Level.Parts
             for (int i = 0; i < _config.VisibleLevelPartCount; i++)
             {
                 var part = NextPart();
-                SpawnPart(part);
+                await SpawnPart(part);
             }
 
             IsInitialized = true;
-        }
-
-        private void SpawnPart(LevelPart part)
-        {
-            //TODO get from pool
-            GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
-            LevelPart newPart = partGo.GetComponent<LevelPart>();
-
-            partGo.transform.position = _moveStrategy.GetNewPartPosition(newPart, _currentParts);
-            partGo.transform.rotation = _container.rotation;
-            partGo.SetActive(true);
-        
-            _currentParts.Add(newPart);
         }
 
         public void Tick()
@@ -110,13 +102,32 @@ namespace Gameplay.Level.Parts
             var part = NextPart();
             SpawnPart(part);
         }
-    
+
+        private async UniTask SpawnPart(LevelPart part)
+        {
+            //TODO get from pool
+            GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
+            LevelPart newPart = partGo.GetComponent<LevelPart>();
+
+            //TODO move to factory?
+            var bonuses = _gameCurrentLevelService.LevelData.bonuses;
+            await newPart.Init(bonuses, _config.MaxBonusCountPerPart, _catalogDataRepository, _resourcesService);
+            
+            partGo.transform.position = _moveStrategy.GetNewPartPosition(newPart, _currentParts);
+            partGo.transform.rotation = _container.rotation;
+            partGo.SetActive(true);
+        
+            _currentParts.Add(newPart);
+        }
+
         private void TryRemovePart(LevelPart part)
         {
             if (!_moveStrategy.CheckRemovePart(part)) 
                 return;
         
             _currentParts.Remove(part);
+            
+            part.Release();
             GameObject.Destroy(part.gameObject); //TODO to pool 
         }
 
@@ -132,15 +143,11 @@ namespace Gameplay.Level.Parts
         
             foreach (var part in _parts)
             {
+                part.Release();
                 GameObject.Destroy(part); //TODO clear from pool  -> unload addressables assets 
             }
             _parts = null;
             _currentParts = null;
-        }
-
-        public void Initialize()
-        {
-            //TODO
         }
     }
 }
