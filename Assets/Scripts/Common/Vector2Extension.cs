@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ECS.Input
+namespace Common
 {
     public static class Vector2Extension
     {

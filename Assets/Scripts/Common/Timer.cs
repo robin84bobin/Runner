@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
 
-
+namespace Common
+{
     public class Timer
     {
         private readonly float _delay;
@@ -100,4 +101,5 @@ using UnityEngine;
             _startCallback = null;
             _finishCallback = null;
         }
+    }
 }

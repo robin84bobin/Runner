@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Services.GameplayInput
+namespace Services.GamePlay.GameplayInput
 {
     public interface IGameInputService
     {

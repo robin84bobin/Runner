@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Services.GameplayInput
+namespace Services.GamePlay.GameplayInput
 {
     public class MobileGameInputService : IGameInputService, IDisposable
     {

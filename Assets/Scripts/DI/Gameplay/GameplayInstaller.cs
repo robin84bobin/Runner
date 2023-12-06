@@ -1,8 +1,11 @@
-﻿using Services.GameplayInput;
+﻿using Gameplay;
+using Gameplay.Level.Parts;
+using Gameplay.Level.Parts.PartsMoving;
+using Services.GamePlay.GameplayInput;
 using UnityEngine;
 using Zenject;
 
-namespace Installers.Gameplay
+namespace DI.Gameplay
 {
     public class GameplayInstaller : MonoInstaller
     {

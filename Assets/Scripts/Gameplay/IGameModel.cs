@@ -1,5 +1,11 @@
-public interface IGameModel
+using Gameplay.Hero;
+using Gameplay.Level;
+
+namespace Gameplay
 {
-    LevelModel LevelModel { get; }
-    HeroModel HeroModel { get; }
+    public interface IGameModel
+    {
+        LevelModel LevelModel { get; }
+        HeroModel HeroModel { get; }
+    }
 }

@@ -1,9 +1,12 @@
 using UnityEngine;
 
-public class HeroModel
+namespace Gameplay.Hero
 {
-    public void ProcessInputMove(Vector2 inputMoveDirection)
+    public class HeroModel
     {
-        throw new System.NotImplementedException();
+        public void ProcessInputMove(Vector2 inputMoveDirection)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

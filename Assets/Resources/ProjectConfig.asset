@@ -13,3 +13,6 @@ MonoBehaviour:
   m_Name: ProjectConfig
   m_EditorClassIdentifier: 
   CatalogRoot: Root
+  CatalogPath: CatalogData
+  DefaultSpeed: -0.01
+  VisibleLevelPartCount: 8

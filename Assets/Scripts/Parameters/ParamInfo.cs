@@ -1,10 +1,12 @@
 ﻿using System;
 
-
-[Serializable]
-public class SkillInfo
+namespace Parameters
 {
-    public ParamName skillName;
-    public float modifyValue;
+    [Serializable]
+    public class SkillInfo
+    {
+        public ParamName skillName;
+        public float modifyValue;
+    }
 }
 

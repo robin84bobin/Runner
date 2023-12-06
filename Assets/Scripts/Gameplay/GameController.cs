@@ -1,29 +1,33 @@
+using Gameplay.Level;
 using Services;
 using Services.GamePlay;
 using UnityEngine;
 using Zenject;
 
-public class GameController : MonoBehaviour
+namespace Gameplay
 {
-    [SerializeField] private LevelController _levelController;
-
-    private IGameModel _gameModel;
-    private GameLevelService _levelService;
-    private IResourcesService _resourcesService;
-
-    private CharacterController _heroController;
-
-    [Inject]
-    public void Construct(IGameModel gameModel, GameLevelService levelService, IResourcesService resourcesService)
+    public class GameController : MonoBehaviour
     {
-        _resourcesService = resourcesService;
-        _levelService = levelService;
-        _gameModel = gameModel;
-    }
+        [SerializeField] private LevelController _levelController;
 
-    async void Start()
-    {
-        await _levelController.BuildLevel();
-    }
+        private IGameModel _gameModel;
+        private GameCurrentLevelService _currentLevelService;
+        private IResourcesService _resourcesService;
+
+        private CharacterController _heroController;
+
+        [Inject]
+        public void Construct(IGameModel gameModel, GameCurrentLevelService currentLevelService, IResourcesService resourcesService)
+        {
+            _resourcesService = resourcesService;
+            _currentLevelService = currentLevelService;
+            _gameModel = gameModel;
+        }
+
+        async void Start()
+        {
+            await _levelController.BuildLevel();
+        }
    
+    }
 }

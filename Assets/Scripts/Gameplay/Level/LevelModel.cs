@@ -1,9 +1,12 @@
 using Data.Catalog;
 
-public class LevelModel
+namespace Gameplay.Level
 {
-    public LevelModel(LevelData levelData)
+    public class LevelModel
     {
+        public LevelModel(LevelData levelData)
+        {
         
+        }
     }
 }

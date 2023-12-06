@@ -1,20 +1,17 @@
 using System.Collections.Generic;
 using System.Linq;
-using Common;
 using Data.Catalog;
-using Services;
 using Services.GamePlay;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Zenject;
 
-namespace View
+namespace UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Inject] private GameLevelService _gameLevelService;
+        [Inject] private GameCurrentLevelService _gameCurrentLevelService;
         [Inject] public CatalogDataRepository CatalogDataRepository;
     
         [SerializeField] private Button startButtonTemplate;
@@ -50,7 +47,7 @@ namespace View
 
         private void LoadLevel(string levelId = "1")
         {
-            _gameLevelService.StartLevel(levelId);
+            _gameCurrentLevelService.StartLevel(levelId);
         }
 
         void OnDestroy()

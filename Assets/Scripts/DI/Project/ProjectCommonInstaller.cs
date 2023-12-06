@@ -6,23 +6,29 @@ using Services.GamePlay;
 using UnityEngine;
 using Zenject;
 
-namespace Installers.Project
+namespace DI.Project
 {
     public class ProjectCommonInstaller : MonoInstaller 
     {
-        [SerializeField] private ProjectConfig _config;
+        [SerializeField] private ProjectConfig _projectConfig;
 
         public override void InstallBindings()
         {
+            BindConfigs();
             BindResourcesService();
             BindDataProxies();
             BindDataRepositories();
             BindGameplayServices();
         }
 
+        private void BindConfigs()
+        {
+            Container.Bind<ProjectConfig>().FromInstance(_projectConfig).AsSingle();
+        }
+
         private void BindGameplayServices()
         {
-            Container.Bind<GameLevelService>().AsSingle();
+            Container.Bind<GameCurrentLevelService>().AsSingle();
         }
 
         private void BindResourcesService()
@@ -35,9 +41,9 @@ namespace Installers.Project
 
         private void BindDataProxies()
         {
-            Container.Bind<IDataProxyService>().To<JsonDataProxyService>().WithArguments(_config.CatalogPath, _config.CatalogRoot)
+            Container.Bind<IDataProxyService>().To<JsonDataProxyService>().WithArguments(_projectConfig.CatalogPath, _projectConfig.CatalogRoot)
                 .WhenInjectedInto<CatalogDataRepository>();
-            Container.Bind<IDataProxyService>().To<JsonDataProxyService>().WithArguments(_config.UserRepositoryPath, _config.CatalogRoot)
+            Container.Bind<IDataProxyService>().To<JsonDataProxyService>().WithArguments(_projectConfig.UserRepositoryPath, _projectConfig.CatalogRoot)
                 .WhenInjectedInto<UserDataRepository>();
         }
 

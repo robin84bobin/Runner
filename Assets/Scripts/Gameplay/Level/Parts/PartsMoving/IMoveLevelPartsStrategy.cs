@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMoveLevelPartsStrategy
+namespace Gameplay.Level.Parts.PartsMoving
 {
-    void Init(Transform container);
-    Vector3 GetNewPartPosition(LevelPart newPart, List<LevelPart> currentParts);
-    bool CheckRemovePart(LevelPart part);
-    void Move(LevelPart part, float speed);
+    public interface IMoveLevelPartsStrategy
+    {
+        void Init(Transform container);
+        Vector3 GetNewPartPosition(LevelPart newPart, List<LevelPart> currentParts);
+        bool CheckRemovePart(LevelPart part);
+        void Move(LevelPart part, float speed);
+    }
 }

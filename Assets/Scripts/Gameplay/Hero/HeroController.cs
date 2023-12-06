@@ -1,11 +1,14 @@
 using UnityEngine;
 
-internal class HeroController : MonoBehaviour
+namespace Gameplay.Hero
 {
-    private HeroModel _model;
-
-    public void Setup(HeroModel model)
+    internal class HeroController : MonoBehaviour
     {
-        _model = model;
+        private HeroModel _model;
+
+        public void Setup(HeroModel model)
+        {
+            _model = model;
+        }
     }
 }

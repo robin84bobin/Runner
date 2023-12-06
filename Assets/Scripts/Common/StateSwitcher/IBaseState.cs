@@ -1,8 +1,11 @@
 
-    public interface IBaseState
+    namespace Common.StateSwitcher
     {
-        void OnEnterState();
-        void OnExitState();
+        public interface IBaseState
+        {
+            void OnEnterState();
+            void OnExitState();
+        }
     }
 
 
