@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;
+using Installers.Project;
 using Services;
 using Services.GamePlay;
 using Zenject;
@@ -13,37 +14,32 @@ public class LevelPartsController : ITickable, IInitializable, IDisposable
     private readonly GameLevelService _gameLevelService;
     private readonly ObjectPool _pool;
     private readonly IMoveLevelPartsStrategy _moveStrategy;
+    private readonly ProjectConfig _config;
 
     private Transform _container;
-    
-    private Vector3 _partRemoveBound;
    
-    //TODO move to config?
-    private readonly float _speed = -0.01f;
-    private readonly int _partCnt = 3;
-    private float _partSize = 24;
-
     private List<LevelPart> _parts;
     private List<LevelPart> _currentParts;
 
-    float _lastPartPos = 0f;
     int _lastPartIndex = -1;
-    
-    bool IsInitialised = false;
+    bool IsInitialized = false;
 
+    //TODO use hero speed with modifiers
+    private float MoveSpeed => _config.DefaultSpeed;
 
-    //TODO inject vertical move parts strategy
     public LevelPartsController(
         IResourcesService resourcesService, 
         GameLevelService gameLevelService, 
         ObjectPool pool,
-        IMoveLevelPartsStrategy moveStrategy
+        IMoveLevelPartsStrategy moveStrategy,
+        ProjectConfig config
         )
     {
         _resourcesService = resourcesService;
         _gameLevelService = gameLevelService;
         _pool = pool;
         _moveStrategy = moveStrategy;
+        _config = config;
     }
 
     public async UniTask CreateParts(PartSpawnInfo[] partSpawnInfos, Transform container)
@@ -68,13 +64,13 @@ public class LevelPartsController : ITickable, IInitializable, IDisposable
         
         _currentParts = new List<LevelPart>();
 
-        for (int i = 0; i < _partCnt; i++)
+        for (int i = 0; i < _config.VisibleLevelPartCount; i++)
         {
             var part = NextPart();
             SpawnPart(part);
         }
 
-        IsInitialised = true;
+        IsInitialized = true;
     }
 
     private void SpawnPart(LevelPart part)
@@ -92,35 +88,34 @@ public class LevelPartsController : ITickable, IInitializable, IDisposable
 
     public void Tick()
     {
-        if (!IsInitialised) 
+        if (!IsInitialized) 
             return;
 
         for (int i = 0; i < _currentParts.Count; i++)
         {
             var part = _currentParts[i];
-            _moveStrategy.Move(part,_speed);
+            _moveStrategy.Move(part, MoveSpeed);
             TryRemovePart(part);
         }
-
         TryAddPart();
     }
 
     private void TryAddPart()
     {
-        if (_currentParts.Count < _partCnt)
-        {
-            var part = NextPart();
-            SpawnPart(part);
-        }
+        if (_currentParts.Count >= _config.VisibleLevelPartCount) 
+            return;
+        
+        var part = NextPart();
+        SpawnPart(part);
     }
     
     private void TryRemovePart(LevelPart part)
     {
-        if (_moveStrategy.CheckRemovePart(part))
-        {
-            _currentParts.Remove(part);
-            GameObject.Destroy(part.gameObject); //TODO to pool 
-        }
+        if (!_moveStrategy.CheckRemovePart(part)) 
+            return;
+        
+        _currentParts.Remove(part);
+        GameObject.Destroy(part.gameObject); //TODO to pool 
     }
 
     private LevelPart NextPart()
@@ -131,7 +126,7 @@ public class LevelPartsController : ITickable, IInitializable, IDisposable
 
     public void Dispose()
     {
-        IsInitialised = false;
+        IsInitialized = false;
         
         foreach (var part in _parts)
         {

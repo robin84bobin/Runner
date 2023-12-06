@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Installers.Project
 {
     [CreateAssetMenu(menuName = "Create ProjectConfig", fileName = "ProjectConfig", order = 0)]
-    internal class ProjectConfig :  ScriptableObject
+    public class ProjectConfig :  ScriptableObject
     {
         [Header("DataConfig:")]
         public string CatalogRoot = "Root";
@@ -11,5 +12,9 @@ namespace Installers.Project
         public string CatalogPath = "CatalogData";
         
         public string UserRepositoryPath => Application.persistentDataPath + "/user_{0}.json";
+        
+        [Header("GameConfig:")]
+        public float DefaultSpeed = -0.01f;
+        public int VisibleLevelPartCount = 3;
     }
 }

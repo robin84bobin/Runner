@@ -19,8 +19,8 @@ namespace Installers.Gameplay
         private void BindLevelParts()
         {
             Container.BindInterfacesAndSelfTo<LevelPartsController>().AsSingle();
-            Container.Bind<IMoveLevelPartsStrategy>().To<HorizontalMoveLevelPartsStrategy>().AsSingle();
-            // Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
+            // Container.Bind<IMoveLevelPartsStrategy>().To<HorizontalMoveLevelPartsStrategy>().AsSingle();
+            Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
         }
 
         private void BindObjectPool()
