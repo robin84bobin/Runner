@@ -15,4 +15,8 @@ public class ProjectConfig :  ScriptableObject
     public int VisibleLevelPartCount = 3;
     public int MaxBonusCountPerPart = 1;
     public int RunTrailCount = 3;
+    [Header("Input:")]
+    public float SwipeTimeThreshold = 1f;
+    public float SwipeDistanceThreshold = 0.8f;
+    public float MoveTime = 0.2f;
 }

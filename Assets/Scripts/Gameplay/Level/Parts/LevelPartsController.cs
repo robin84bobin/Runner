@@ -79,7 +79,7 @@ namespace Gameplay.Level.Parts
             IsInitialized = true;
         }
 
-        public void Tick()
+        void ITickable.Tick()
         {
             if (!IsInitialized) 
                 return;
@@ -136,7 +136,7 @@ namespace Gameplay.Level.Parts
             return _parts[_lastPartIndex];
         }
 
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             IsInitialized = false;
         

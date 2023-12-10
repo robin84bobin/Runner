@@ -17,3 +17,7 @@ MonoBehaviour:
   DefaultSpeed: -0.03
   VisibleLevelPartCount: 8
   MaxBonusCountPerPart: 1
+  RunTrailCount: 3
+  SwipeTimeThreshold: 1
+  SwipeDistanceThreshold: 0.8
+  MoveTime: 0.2

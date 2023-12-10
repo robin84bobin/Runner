@@ -11,7 +11,7 @@ namespace Gameplay
 
         public GameModel(GameCurrentLevelService gameCurrentLevelService)
         {
-            //TODO remove this models?
+            //TODO remove models?
             var levelData = gameCurrentLevelService.LevelData;
             LevelModel = new LevelModel(levelData);
             HeroModel = new HeroModel();

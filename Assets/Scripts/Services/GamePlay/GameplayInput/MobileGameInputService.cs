@@ -7,8 +7,7 @@ namespace Services.GamePlay.GameplayInput
 {
     public class MobileGameInputService : IGameInputService, ITickable, IDisposable
     {
-        const float SwipeTimeThreshold = 1f;
-        const float SwipeDistanceThreshold = 0.8f;
+        private readonly ProjectConfig _projectConfig;
         public event Action<Vector2> OnMoveDirection;
         
         private readonly InputActions _inputActions;
@@ -18,13 +17,23 @@ namespace Services.GamePlay.GameplayInput
         private Vector2 _startTouchPosition;
         private Vector2 _endTouchPosition;
 
-        public MobileGameInputService()
+        public MobileGameInputService(ProjectConfig projectConfig)
         {
+            _projectConfig = projectConfig;
             _inputActions = new InputActions();
             _inputActions.Mobile.Enable();
 
             _inputActions.Mobile.PrimaryTouchContact.started += OnPrimaryTouchStart;
             _inputActions.Mobile.PrimaryTouchContact.canceled += OnPrimaryTouchEnd;
+        }
+
+        void ITickable.Tick()
+        {
+            if (_swipeDirection == default) 
+                return;
+            
+            OnMoveDirection?.Invoke(_swipeDirection);
+            DropValues();
         }
 
         private void OnPrimaryTouchStart(InputAction.CallbackContext context)
@@ -39,14 +48,7 @@ namespace Services.GamePlay.GameplayInput
             _endTouchTime = Time.time;
             _endTouchPosition = _inputActions.Mobile.PrimaryTouchPosition.ReadValue<Vector2>();
 
-            if (_endTouchTime - _startTouchTime > SwipeTimeThreshold)
-            {
-                DropValues();
-                return;
-            }
-
-            var distance = Vector2.Distance(_endTouchPosition, _startTouchPosition);
-            if (distance < SwipeDistanceThreshold)
+            if (CheckSwipeDetected() == false)
             {
                 DropValues();
                 return;
@@ -56,9 +58,11 @@ namespace Services.GamePlay.GameplayInput
         }
 
 
-        public Vector2 GetInputMoveDirection()
+        private bool CheckSwipeDetected()
         {
-            return _swipeDirection;
+            return _endTouchTime - _startTouchTime < _projectConfig.SwipeTimeThreshold
+                   ||
+                   Vector2.Distance(_endTouchPosition, _startTouchPosition) > _projectConfig.SwipeDistanceThreshold;
         }
 
         private void DropValues()
@@ -70,17 +74,7 @@ namespace Services.GamePlay.GameplayInput
             _swipeDirection = default;
         }
 
-        public void Tick()
-        {
-            var inputMoveDirection = GetInputMoveDirection();
-            if (inputMoveDirection == default) 
-                return;
-            
-            OnMoveDirection?.Invoke(inputMoveDirection);
-            DropValues();
-        }
-
-        public void Dispose()
+        void IDisposable.Dispose()
         {
             _inputActions.Mobile.PrimaryTouchContact.started -= OnPrimaryTouchStart;
             _inputActions.Mobile.PrimaryTouchContact.canceled -= OnPrimaryTouchEnd;

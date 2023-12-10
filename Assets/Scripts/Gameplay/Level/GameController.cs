@@ -17,7 +17,6 @@ namespace Gameplay.Level
         [SerializeField] private Transform partsContainer;
         
         private Transform _hero;
-        
         private IGameInputService _inputService;
         private LevelModel _model;
         private IResourcesService _resourcesService;
@@ -27,15 +26,21 @@ namespace Gameplay.Level
         private bool _levelBuilded = false;
         private bool _isMoving = false;
         private Coroutine _moveHeroCoroutine;
+        private float _moveValue;
+        private ProjectConfig _config;
+        private float _leftXBound;
+        private float _rightXBound;
 
         [Inject]
         public void Construct(IGameModel gameModel,
+            ProjectConfig config,
             GameCurrentLevelService currentLevelService,
             IResourcesService resourcesService,
             CatalogDataRepository catalogDataRepository,
             LevelPartsController levelPartsController,
             IGameInputService inputService)
         {
+            _config = config;
             _inputService = inputService;
             _levelPartsController = levelPartsController;
             _catalogDataRepository = catalogDataRepository;
@@ -52,6 +57,11 @@ namespace Gameplay.Level
 
         private void Initialize()
         {
+            //TODO move to heroMoveController
+            var boxCollider = partsContainer.GetComponent<BoxCollider>();
+            _moveValue = boxCollider.size.x/ _config.RunTrailCount;
+            _leftXBound = partsContainer.transform.TransformPoint(boxCollider.center - boxCollider.size * 0.5f).x;
+            _rightXBound = partsContainer.transform.TransformPoint(boxCollider.center + boxCollider.size*0.5f).x;
             _inputService.OnMoveDirection += ProcessMove;
         }
 
@@ -72,28 +82,32 @@ namespace Gameplay.Level
             await _levelPartsController.CreateParts(partSpawnInfos, partsContainer);
         }
 
+        //TODO move to heroMoveController
         private void ProcessMove(Vector2 inputMoveDirection)
         {
             if (!_levelBuilded || _isMoving)
                 return;
-            
-            var moveDirection = inputMoveDirection.NormalizeToHorizontalDirection();
-            _moveHeroCoroutine = StartCoroutine(MoveHeroTo(moveDirection, 1f));            
+
+            var moveDirection = inputMoveDirection.NormalizeToHorizontalDirection(_moveValue);
+            _moveHeroCoroutine = StartCoroutine(MoveHeroTo(moveDirection, _config.MoveTime));            
         }
 
-        //TODO move to HeroController
+        //TODO move to heroMoveController
         private IEnumerator MoveHeroTo(Vector2 moveDirection, float moveTime)
         {
-            _isMoving = true;
-
             float startTime = Time.time;
             Vector3 startPosition = _hero.position;
             Vector3 destination = startPosition + new Vector3(moveDirection.x, moveDirection.y);
 
+
+            if (destination.x > _rightXBound || destination.x < _leftXBound)
+                yield break;
+            
+            _isMoving = true;
             while (destination != _hero.position)
             {
                 float value = (Time.time - startTime) / moveTime;
-                _hero.position = Vector3.Lerp(startPosition, destination, value);
+                _hero.position = Vector3.Slerp(startPosition, destination, value);
                 yield return null;
             }
 
