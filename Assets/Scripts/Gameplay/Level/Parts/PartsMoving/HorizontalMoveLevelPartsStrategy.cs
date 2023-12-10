@@ -17,7 +17,7 @@ namespace Gameplay.Level.Parts.PartsMoving
         private Vector3 GetPartRemoveBound()
         {
             var bounds = _container.GetComponent<BoxCollider>().bounds;
-            return new Vector3(- bounds.size.x, 0,  0);
+            return new Vector3( -bounds.size.x, 0,  0);
         }
 
         public Vector3 GetNewPartPosition(LevelPart newPart, List<LevelPart> currentParts)
@@ -39,7 +39,7 @@ namespace Gameplay.Level.Parts.PartsMoving
     
         public void Move(LevelPart part, float speed)
         {
-            part.transform.position += new Vector3(speed, 0f, 0f);
+            part.transform.position -= new Vector3(speed, 0f, 0f);
         }
     }
 }

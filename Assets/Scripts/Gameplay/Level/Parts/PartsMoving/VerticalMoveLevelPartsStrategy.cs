@@ -39,7 +39,7 @@ namespace Gameplay.Level.Parts.PartsMoving
     
         public void Move(LevelPart part, float speed)
         {
-            part.transform.position += new Vector3(0f, speed, 0f);
+            part.transform.position -= new Vector3(0f, speed, 0f);
         }
     }
 }

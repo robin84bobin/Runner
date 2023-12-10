@@ -10,7 +10,7 @@ using Zenject;
 
 namespace Gameplay.Level.Parts
 {
-    public class LevelPartsController : ITickable, IDisposable
+    public class LevelController : ITickable, IDisposable
     {
         private readonly IResourcesService _resourcesService;
         private readonly GameCurrentLevelService _gameCurrentLevelService;
@@ -30,7 +30,7 @@ namespace Gameplay.Level.Parts
         //TODO use hero speed with modifiers
         private float MoveSpeed => _config.DefaultSpeed;
 
-        public LevelPartsController(
+        public LevelController(
             IResourcesService resourcesService, 
             GameCurrentLevelService gameCurrentLevelService, 
             ObjectPool pool,
@@ -57,7 +57,7 @@ namespace Gameplay.Level.Parts
             {
                 var partPrefabName = _gameCurrentLevelService.GetPartPrefabName(partSpawnInfo.id);
             
-                //TODO instantiate to pool
+                //TODO instantiate from pool
                 var partGO = await _resourcesService.Instantiate( 
                                                                             partPrefabName, 
                                                                             Vector3.zero, Quaternion.identity, 
@@ -126,7 +126,6 @@ namespace Gameplay.Level.Parts
         
             _currentParts.Remove(part);
             
-            part.Release();
             GameObject.Destroy(part.gameObject); //TODO to pool 
         }
 
@@ -142,7 +141,6 @@ namespace Gameplay.Level.Parts
         
             foreach (var part in _parts)
             {
-                part.Release();
                 GameObject.Destroy(part); //TODO clear from pool  -> unload addressables assets 
             }
             _parts = null;

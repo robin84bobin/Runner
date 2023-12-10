@@ -4,6 +4,6 @@ namespace Data.Catalog
 {
     public class BonusData : DataItem
     {
-        public int[] abilitiesIds;
+        public string[] abilitiesIds;
     }
 }

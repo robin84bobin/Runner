@@ -8,107 +8,107 @@ namespace Parameters
     public enum ParamName
     {
         NOPE,
-        HEALTH,
+        HEIGHT,
         SPEED,
-        ARMOR_EQUIP,
-        SPEED_EQUIP
     }
 
-    [Serializable]
     public class Parameter
     {
-        [FormerlySerializedAs("name")] public ParamName Name;
+        public ParamName Name { get; private set; }
 
-        public float minValue = 0f;
-        public float maxValue = 100f;
-        public float defaultValue = 100f;
+        public float Value { get; private set; }
+        public float MinValue { get; private set; } = 0f;
+        public float MaxValue { get; private set; } = 100f;
+        public float DefaultValue { get; private set; } = 100f;
 
-        public UnityEvent onMaxValue;
-        public UnityEvent onMinValue;
-        public SkillChangeEvent onSkillChange;
+        public event Action onMaxValue;
+        public event Action onMinValue;
+        public ValueChangeEvent OnValueChange;
 
-        [NonSerialized]
-        public float value;
 
         public Parameter (ParamName name, float value, float maxValue = float.MaxValue, float minValue = float.MinValue)
         {
             Name = name;
-            this.maxValue = maxValue;
-            this.minValue = minValue;
-            defaultValue = value;
+            this.MaxValue = maxValue;
+            this.MinValue = minValue;
+            DefaultValue = value;
             InitValues();
         }
 
         public void InitValues()
         {
-            if (maxValue < minValue)
+            if (MaxValue < MinValue)
             {
                 Debug.LogWarning(string.Format("Skill:{0}  max value:{1} lower than min value {2}",
-                    Name.ToString(), maxValue.ToString(), minValue.ToString()));
-                maxValue = minValue;
+                    Name.ToString(), MaxValue.ToString(), MinValue.ToString()));
+                MaxValue = MinValue;
             }
-            if (defaultValue > maxValue) {
+            if (DefaultValue > MaxValue) {
                 Debug.LogWarning(string.Format("Skill:{0}  default value:{1} higher than max value {2}",
-                    Name.ToString(), defaultValue.ToString(), maxValue.ToString()));
-                defaultValue = Mathf.Clamp(defaultValue, minValue, maxValue);
+                    Name.ToString(), DefaultValue.ToString(), MaxValue.ToString()));
+                DefaultValue = Mathf.Clamp(DefaultValue, MinValue, MaxValue);
             }
-            if (defaultValue < minValue) {
+            if (DefaultValue < MinValue) {
                 Debug.LogWarning(string.Format("Skill:{0}  default value:{1} lower than min value {2}",
-                    Name.ToString(), defaultValue.ToString(), minValue.ToString()));
-                defaultValue = Mathf.Clamp(defaultValue, minValue, maxValue);
+                    Name.ToString(), DefaultValue.ToString(), MinValue.ToString()));
+                DefaultValue = Mathf.Clamp(DefaultValue, MinValue, MaxValue);
             }
         
-            value = defaultValue;
+            Value = DefaultValue;
         }
 
+        public void ResetToDefaultValue()
+        {
+            ChangeValue(DefaultValue);
+        }
+        
         /// <summary>
-        /// Change skill value and returns remainder
+        /// Change param value and returns remainder
         /// </summary>
         public float ChangeValue(float amount)
         {
-            return SetValue(value + amount);
+            return SetValue(Value + amount);
         }
 
         /// <summary>
-        /// Set skill value and returns remainder
+        /// Set param and returns remainder
         /// </summary>
         public float SetValue(float newValue)
         {
             float remainder = 0;
-            float oldValue = value;
+            float oldValue = Value;
 
-            if (newValue > maxValue)
+            if (newValue > MaxValue)
             {
-                value = maxValue;
-                onMaxValue.Invoke();
-                onSkillChange.Invoke(oldValue, value);
-                remainder = newValue - maxValue;
+                Value = MaxValue;
+                onMaxValue?.Invoke();
+                OnValueChange?.Invoke(oldValue, Value);
+                remainder = newValue - MaxValue;
                 return remainder;
             }
             else
-            if (newValue <= minValue)
+            if (newValue <= MinValue)
             {
-                value = minValue;
-                onMinValue.Invoke();
-                onSkillChange.Invoke(oldValue, value);
-                remainder = newValue - minValue; 
+                Value = MinValue;
+                onMinValue?.Invoke();
+                OnValueChange?.Invoke(oldValue, Value);
+                remainder = newValue - MinValue; 
                 return remainder;
             }
 
-            value = newValue;
-            onSkillChange.Invoke(oldValue, value);
+            Value = newValue;
+            OnValueChange?.Invoke(oldValue, Value);
 
             return remainder;
         }
 
         public void Release()
         {
-            onSkillChange.RemoveAllListeners();
-            onMinValue.RemoveAllListeners();
-            onMaxValue.RemoveAllListeners();
+            OnValueChange = null;
+            onMinValue = null;
+            onMaxValue = null;
         }
     }
 
-    [Serializable]
-    public class SkillChangeEvent : UnityEvent<float,float> { };
+    public delegate Action<float,float> ValueChangeEvent(float oldValue, float newValue);
 }

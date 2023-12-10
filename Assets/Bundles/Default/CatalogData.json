@@ -112,25 +112,25 @@
     "Abilities": [
       {
         "id": 1,
+        "abilityType": 3,
         "title": "relax, man!",
         "value": 0.5,
-        "modifierType": "multiply",
         "duration": 10,
         "description": "slow down for {0} seconds"
       },
       {
         "id": 2,
+        "abilityType": 2,
         "title": "cheetah blood",
         "value": 2,
-        "modifierType": "add",
         "duration": 10,
         "description": "speed up for {0} seconds"
       },
       {
         "id": 3,
+        "abilityType": 1,
         "title": "pegeon",
         "value": 2,
-        "modifierType": "add",
         "duration": 10,
         "description": "fly for {0} seconds"
       }

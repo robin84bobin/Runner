@@ -21,7 +21,7 @@ namespace DI.Gameplay
 
         private void BindLevelParts()
         {
-            Container.BindInterfacesAndSelfTo<LevelPartsController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelController>().AsSingle();
             // Container.Bind<IMoveLevelPartsStrategy>().To<HorizontalMoveLevelPartsStrategy>().AsSingle();
             Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
         }

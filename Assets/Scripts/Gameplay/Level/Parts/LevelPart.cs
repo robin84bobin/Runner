@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using Data.Catalog;
+using Gameplay.Bonuses;
 using Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -29,22 +30,11 @@ namespace Gameplay.Level.Parts
                 var spawnPointIndex = Random.Range(0, _bonusSpawnPoints.Length);
                 var spawnPoint = _bonusSpawnPoints[spawnPointIndex];
 
-                string prefabName = $"Bonus{bonusData.Id}";
-                await resourcesService.Instantiate(prefabName, spawnPoint.position, Quaternion.identity, spawnPoint.parent);
+                string assetKey = $"Bonus{bonusData.Id}";
+                var bonusGo = await resourcesService.Instantiate(assetKey, spawnPoint.position, Quaternion.identity, spawnPoint.parent);
+                var bonusController = bonusGo.GetComponent<BonusController>();
+                bonusController.Setup(bonusData);
             }
-        }
-
-        public void Release()
-        {
-            // foreach (var spawnPoint in _bonusSpawnPoints)
-            // {
-            //     if (spawnPoint.childCount > 0)
-            //     {
-            //         var child = spawnPoint.GetChild(0);
-            //         if (child != null)
-            //             Destroy(child);
-            //     }
-            // }
         }
     }
 }
