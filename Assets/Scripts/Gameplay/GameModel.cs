@@ -36,11 +36,6 @@ namespace Gameplay
 
         private void ApplyAbility(AbilityData abilityData)
         {
-           // if (Enum.TryParse( abilityData.abilityType, out AbilityType abilityType) == false);
-           // {
-               // Debug.LogError($"fail to parse ability type : {abilityData.abilityType}");
-           // }
-                
            var abilityModel = CreateAbility(abilityData.abilityType, abilityData);
            if (abilityModel == default)
                return;
