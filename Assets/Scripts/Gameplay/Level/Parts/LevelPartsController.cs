@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using Data.Catalog;
 using Gameplay.Level.Parts.PartsMoving;
 using Services;
@@ -109,7 +108,7 @@ namespace Gameplay.Level.Parts
             GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
             LevelPart newPart = partGo.GetComponent<LevelPart>();
 
-            //TODO move to factory?
+            //TODO move creation to factory?
             var bonuses = _gameCurrentLevelService.LevelData.bonuses;
             await newPart.Init(bonuses, _config.MaxBonusCountPerPart, _catalogDataRepository, _resourcesService);
             

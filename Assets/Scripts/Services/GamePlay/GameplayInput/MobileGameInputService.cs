@@ -1,11 +1,16 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace Services.GamePlay.GameplayInput
 {
-    public class MobileGameInputService : IGameInputService, IDisposable
+    public class MobileGameInputService : IGameInputService, ITickable, IDisposable
     {
+        const float SwipeTimeThreshold = 1f;
+        const float SwipeDistanceThreshold = 0.8f;
+        public event Action<Vector2> OnMoveDirection;
+        
         private readonly InputActions _inputActions;
         private Vector2 _swipeDirection = new Vector2();
         private float _startTouchTime;
@@ -24,6 +29,7 @@ namespace Services.GamePlay.GameplayInput
 
         private void OnPrimaryTouchStart(InputAction.CallbackContext context)
         {
+            DropValues();
             _startTouchTime = Time.time;
             _startTouchPosition = _inputActions.Mobile.PrimaryTouchPosition.ReadValue<Vector2>();
         }
@@ -32,32 +38,46 @@ namespace Services.GamePlay.GameplayInput
         {
             _endTouchTime = Time.time;
             _endTouchPosition = _inputActions.Mobile.PrimaryTouchPosition.ReadValue<Vector2>();
+
+            if (_endTouchTime - _startTouchTime > SwipeTimeThreshold)
+            {
+                DropValues();
+                return;
+            }
+
+            var distance = Vector2.Distance(_endTouchPosition, _startTouchPosition);
+            if (distance < SwipeDistanceThreshold)
+            {
+                DropValues();
+                return;
+            }
+
+            _swipeDirection = _endTouchPosition - _startTouchPosition;
         }
+
 
         public Vector2 GetInputMoveDirection()
         {
-            _swipeDirection = Vector2.zero;
-            
-            if (_endTouchTime - _startTouchTime > 1f)
-                return default;
-
-            if (Vector2.Distance(_endTouchPosition, _startTouchPosition) < 0.2f)
-                return default;
-
-            _swipeDirection = _endTouchPosition - _startTouchPosition;
-            
-            _startTouchTime = 0f;
-            _endTouchTime = 0f;
-            _startTouchPosition = Vector2.zero;
-            _endTouchPosition = Vector2.zero;
-            
             return _swipeDirection;
         }
 
-        public bool GetJump()
+        private void DropValues()
         {
-            var value = _inputActions.Mobile.PrimaryTouchContact.ReadValue<float>();
-            return value != 0;
+            _startTouchTime = default;
+            _endTouchTime = default;
+            _startTouchPosition = default;
+            _endTouchPosition = default;
+            _swipeDirection = default;
+        }
+
+        public void Tick()
+        {
+            var inputMoveDirection = GetInputMoveDirection();
+            if (inputMoveDirection == default) 
+                return;
+            
+            OnMoveDirection?.Invoke(inputMoveDirection);
+            DropValues();
         }
 
         public void Dispose()

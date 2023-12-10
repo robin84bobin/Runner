@@ -14,4 +14,5 @@ public class ProjectConfig :  ScriptableObject
     public float DefaultSpeed = -0.01f;
     public int VisibleLevelPartCount = 3;
     public int MaxBonusCountPerPart = 1;
+    public int RunTrailCount = 3;
 }
