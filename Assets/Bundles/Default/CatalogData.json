@@ -113,6 +113,7 @@
       {
         "id": 1,
         "abilityType": 3,
+        "paramType": 2,
         "title": "relax, man!",
         "value": 0.05,
         "duration": 10,
@@ -121,6 +122,7 @@
       {
         "id": 2,
         "abilityType": 2,
+        "paramType": 2,
         "title": "coffee run!",
         "value": 2,
         "duration": 10,
@@ -129,6 +131,7 @@
       {
         "id": 3,
         "abilityType": 1,
+        "paramType": 1,
         "title": "flying fish!",
         "value": 5,
         "duration": 10,

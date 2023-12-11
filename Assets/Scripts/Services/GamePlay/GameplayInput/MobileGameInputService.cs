@@ -60,9 +60,9 @@ namespace Services.GamePlay.GameplayInput
 
         private bool CheckSwipeDetected()
         {
-            return _endTouchTime - _startTouchTime < _gameplayConfig.SwipeTimeThreshold
-                   ||
-                   Vector2.Distance(_endTouchPosition, _startTouchPosition) > _gameplayConfig.SwipeDistanceThreshold;
+            var distance = Vector2.Distance(_endTouchPosition, _startTouchPosition);
+            return _endTouchTime - _startTouchTime < _gameplayConfig.SwipeTimeThreshold ||
+                   distance > _gameplayConfig.SwipeDistanceThreshold;
         }
 
         private void DropValues()

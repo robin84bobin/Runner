@@ -34,31 +34,30 @@ namespace Gameplay
 
         private void ApplyAbility(AbilityData abilityData)
         {
-           var abilityModel = CreateAbility(abilityData.abilityType, abilityData);
-           if (abilityModel == default)
+           var newAbility = CreateAbility(abilityData.abilityType, abilityData);
+           if (newAbility == default)
                return;
            
-           //TODO make SimpleParamValueAbility -> drop active abilities with same param name 
            foreach (var ability in Abilities)
            {
-               ability.Finish();
+               if (ability.ParamName == newAbility.ParamName)
+               {
+                   ability.Finish();
+               }
            }
            
-           Abilities.Add(abilityModel);
-           abilityModel.Start();
-           
-           // TODO Fire signal to show UI with ability title/description
-           
+           Abilities.Add(newAbility);
+           newAbility.Start();
         }
 
         private BaseAbilityModel CreateAbility(AbilityType abilityType, AbilityData abilityData)
         {
-            //TODO make SimpleParamValueAbility -> change value by param name
             switch (abilityType)
             { 
-                case AbilityType.Fly: return new FlyAbilityModel(HeroModel, abilityData);
-                case AbilityType.SpeedUp: return new SpeedUpAbilityModel(HeroModel, abilityData);
-                case AbilityType.SlowDown: return new SlowDownAbilityModel(HeroModel, abilityData);
+                case AbilityType.Fly: 
+                case AbilityType.SpeedUp: 
+                case AbilityType.SlowDown: 
+                    return new PlayerParamSimpleAbilityModel(HeroModel, abilityData);
                 default: return default;
             }
         }

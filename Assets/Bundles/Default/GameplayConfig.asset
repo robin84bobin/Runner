@@ -17,7 +17,8 @@ MonoBehaviour:
   MaxHeight: 5
   VisibleLevelPartCount: 5
   MaxBonusCountPerPart: 1
-  RunTrailCount: 5
+  RunTrailCount: 3
   SwipeTimeThreshold: 1
   SwipeDistanceThreshold: 0.8
   MoveTime: 0.2
+  horizontalMode: 0

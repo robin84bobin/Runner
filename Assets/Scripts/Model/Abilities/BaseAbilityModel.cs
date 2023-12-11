@@ -1,6 +1,7 @@
 using System;
 using Data.Catalog;
 using Gameplay.Hero;
+using Parameters;
 using UnityEngine;
 
 namespace Gameplay
@@ -8,6 +9,8 @@ namespace Gameplay
     public abstract class BaseAbilityModel
     {
         public bool IsFinished { get; private set; }
+        public ParamName ParamName => _data.paramType;
+
         protected readonly HeroModel _heroModel;
         protected readonly  AbilityData _data;
 

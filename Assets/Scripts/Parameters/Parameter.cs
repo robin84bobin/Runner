@@ -5,9 +5,9 @@ namespace Parameters
 {
     public enum ParamName
     {
-        NOPE,
-        HEIGHT,
-        SPEED,
+        NOPE = 0,
+        HEIGHT = 1,
+        SPEED = 2,
     }
 
     public class Parameter
