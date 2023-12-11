@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;
+using Gameplay.Hero;
 using Gameplay.Level.Parts.PartsMoving;
 using Services;
 using Services.GamePlay;
@@ -18,19 +19,20 @@ namespace Gameplay.Level.Parts
         private readonly IMoveLevelPartsStrategy _moveStrategy;
         private readonly ProjectConfig _config;
         private readonly CatalogDataRepository _catalogDataRepository;
+        private readonly HeroModel _heroModel;
 
         private Transform _container;
-   
+
         private List<LevelPart> _parts;
         private List<LevelPart> _currentParts;
 
         int _lastPartIndex = -1;
         bool IsInitialized = false;
 
-        //TODO use hero speed with modifiers
-        private float MoveSpeed => _config.DefaultSpeed;
+        private float MoveSpeed => _heroModel.Speed.Value;
 
         public LevelController(
+            IGameModel gameModel,
             IResourcesService resourcesService, 
             GameCurrentLevelService gameCurrentLevelService, 
             ObjectPool pool,
@@ -39,6 +41,7 @@ namespace Gameplay.Level.Parts
             CatalogDataRepository catalogDataRepository
         )
         {
+            _heroModel = gameModel.HeroModel;
             _resourcesService = resourcesService;
             _gameCurrentLevelService = gameCurrentLevelService;
             _pool = pool;

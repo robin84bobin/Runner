@@ -15,9 +15,6 @@ namespace Gameplay.Level
         [SerializeField] private Transform heroSpawnPoint;
         [SerializeField] private Transform partsContainer;
 
-        private InputMoveController _heroInputMoveController;
-        private BonusCollisionController _bonusCollisionController;
-        private LevelModel _model;
         private IResourcesService _resourcesService;
         private GameCurrentLevelService _currentLevelService;
         private CatalogDataRepository _catalogDataRepository;
@@ -25,6 +22,10 @@ namespace Gameplay.Level
         private ProjectConfig _config;
         private IGameInputService _inputService;
         private IGameModel _gameModel;
+        
+        private InputMoveController _heroMoveController;
+        private BonusCollisionController _bonusCollisionController;
+        private HeroHeightController _heroHeightController;
 
         [Inject]
         public void Construct(
@@ -78,8 +79,12 @@ namespace Gameplay.Level
 
             _bonusCollisionController = go.GetComponent<BonusCollisionController>();
             _bonusCollisionController.Setup(_gameModel);
-            _heroInputMoveController = go.GetComponent<InputMoveController>();
-            _heroInputMoveController.Setup(_config, _inputService, partsContainer);
+            
+            _heroHeightController = go.GetComponent<HeroHeightController>();
+            _heroHeightController.Setup(_gameModel.HeroModel, -heroSpawnPoint.position.z);
+            
+            _heroMoveController = go.GetComponent<InputMoveController>();
+            _heroMoveController.Setup(_config, _inputService, partsContainer);
         }
     }
 }

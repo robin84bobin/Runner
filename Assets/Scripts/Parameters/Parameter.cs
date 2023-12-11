@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace Parameters
 {
@@ -59,13 +57,18 @@ namespace Parameters
 
         public void ResetToDefaultValue()
         {
-            ChangeValue(DefaultValue);
+            SetValue(DefaultValue);
         }
-        
+
+        public void SetDefaultValue(float defaultValue)
+        {
+            DefaultValue = defaultValue;
+        }
+
         /// <summary>
         /// Change param value and returns remainder
         /// </summary>
-        public float ChangeValue(float amount)
+        public float AddValue(float amount)
         {
             return SetValue(Value + amount);
         }
@@ -110,5 +113,5 @@ namespace Parameters
         }
     }
 
-    public delegate Action<float,float> ValueChangeEvent(float oldValue, float newValue);
+    public delegate void ValueChangeEvent(float oldValue, float newValue);
 }

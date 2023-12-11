@@ -1,11 +1,9 @@
-using Data.Catalog;
 using Gameplay.Hero;
 
 namespace Gameplay
 {
-    public interface IGameModel
+    public interface IGameModel: IBonusApplier
     {
         HeroModel HeroModel { get; }
-        void ApplyBonus(BonusData data);
     }
 }

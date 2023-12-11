@@ -8,7 +8,7 @@ namespace Gameplay.Hero
     public class InputMoveController : MonoBehaviour
     {
         private bool _isMoving = false;
-        private Coroutine _moveHeroCoroutine;
+        private Coroutine _moveCoroutine;
         private float _moveValue;
         
         private float _leftXBound;
@@ -29,6 +29,7 @@ namespace Gameplay.Hero
             _inputService.OnMoveDirection += ProcessMove;
         }
         
+        //TODO calc restrictions outside
         private void SetupMoveRestrictions(Transform moveBoundaries)
         {
             var boxCollider = moveBoundaries.GetComponent<BoxCollider>();
@@ -52,10 +53,10 @@ namespace Gameplay.Hero
             if (destination.x > _rightXBound || destination.x < _leftXBound)
                 return;
             
-            _moveHeroCoroutine = StartCoroutine(MoveHeroTo(destination, _config.MoveTime));            
+            _moveCoroutine = StartCoroutine(MoveTo(destination, _config.MoveTime));            
         }
 
-        private IEnumerator MoveHeroTo(Vector3 destination, float moveTime)
+        private IEnumerator MoveTo(Vector3 destination, float moveTime)
         {
             _isMoving = true;
             while (destination != transform.position)
@@ -69,10 +70,10 @@ namespace Gameplay.Hero
         
         private void OnDestroy()
         {
-            if (_moveHeroCoroutine != null)
+            if (_moveCoroutine != null)
             {
-                StopCoroutine(_moveHeroCoroutine);
-                _moveHeroCoroutine = null;
+                StopCoroutine(_moveCoroutine);
+                _moveCoroutine = null;
             }
 
             _inputService.OnMoveDirection -= ProcessMove;

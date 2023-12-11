@@ -5,11 +5,11 @@ namespace Gameplay.Hero
 {
     public class BonusCollisionController : MonoBehaviour
     {
-        private IGameModel _gameModel;
+        private IBonusApplier _bonusApplier;
 
-        public void Setup(IGameModel gameModel)
+        public void Setup(IBonusApplier bonusApplier)
         {
-            _gameModel = gameModel;
+            _bonusApplier = bonusApplier;
         }
         
         void OnTriggerEnter(Collider other)
@@ -20,13 +20,11 @@ namespace Gameplay.Hero
         void ProcessCollision(GameObject otherGo)
         {
             var bonusControllers = otherGo.GetComponents<BonusController>();
-            for (int i = 0; i < bonusControllers.Length; ++i)
+            foreach (var bonusController in bonusControllers)
             {
-                //TODO use Signals
-               _gameModel.ApplyBonus(bonusControllers[i].Data);
+                _bonusApplier.ApplyBonus(bonusController.Data);
+                bonusController.OnApplied();
             }
         }
-
-
     }
 }

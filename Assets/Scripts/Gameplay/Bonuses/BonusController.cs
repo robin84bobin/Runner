@@ -11,6 +11,10 @@ namespace Gameplay.Bonuses
         {
             Data = data;
         }
-        
+
+        public void OnApplied()
+        {
+            Destroy(gameObject);
+        }
     }
 }
