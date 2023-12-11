@@ -16,7 +16,7 @@ namespace Gameplay
 
         public GameModel(
             CatalogDataRepository catalogDataRepository, 
-            ProjectConfig config)
+            GameplayConfig config)
         {
             _catalogDataRepository = catalogDataRepository;
 

@@ -12,7 +12,7 @@ namespace Gameplay.Hero
 
         public Dictionary<ParamName, Parameter> Parameters { get; private set; }
         
-        public HeroModel(ProjectConfig config)
+        public HeroModel(GameplayConfig config)
         {
             Speed = new Parameter(ParamName.SPEED, config.DefaultSpeed, config.MaxSpeed, 0f);
             Height = new Parameter(ParamName.HEIGHT, 0, config.MaxHeight, 0);

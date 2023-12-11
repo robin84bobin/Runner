@@ -17,9 +17,9 @@ namespace Gameplay.Hero
         private float _startTime;
         
         private IGameInputService _inputService;
-        private ProjectConfig _config;
+        private GameplayConfig _config;
         
-        public void Setup(ProjectConfig config, IGameInputService inputService, Transform moveBoundaries)
+        public void Setup(GameplayConfig config, IGameInputService inputService, Transform moveBoundaries)
         {
             _inputService = inputService;
             _config = config;

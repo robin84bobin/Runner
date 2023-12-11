@@ -7,20 +7,9 @@ public class ProjectConfig :  ScriptableObject
     public string CatalogRoot = "Root";
         
     public string CatalogPath = "CatalogData";
+    public string GameplayConfigKey = "GameplayConfig";
         
     public string UserRepositoryPath => Application.persistentDataPath + "/user_{0}.json";
 
-    [Header("GameConfig:")]
-    public float DefaultSpeed = 0.01f;
-    public float MaxSpeed = 0.1f;
-    public float MaxHeight = 3f;
-
-    public int VisibleLevelPartCount = 3;
-    public int MaxBonusCountPerPart = 1;
-    public int RunTrailCount = 3;
-
-    [Header("InputConfig:")]
-    public float SwipeTimeThreshold = 1f;
-    public float SwipeDistanceThreshold = 0.8f;
-    public float MoveTime = 0.2f;
+    public GameplayConfig GameplayConfig;
 }

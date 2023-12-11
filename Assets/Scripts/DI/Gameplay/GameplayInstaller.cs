@@ -10,20 +10,34 @@ namespace DI.Gameplay
     public class GameplayInstaller : MonoInstaller
     {
         [SerializeField] private ObjectPool _objectPool;
-        
+        private ProjectConfig _projectConfig;
+
         public override void InstallBindings()
         {
+            BindConfigs();
             BindPlatformInput();
             BindModel();
             BindObjectPool();
             BindLevelParts();
         }
 
+        private void BindConfigs()
+        {
+            _projectConfig = Container.Resolve<ProjectConfig>();
+            Container.Bind<GameplayConfig>().FromInstance(_projectConfig.GameplayConfig);
+        }
+
         private void BindLevelParts()
         {
             Container.BindInterfacesAndSelfTo<LevelController>().AsSingle();
-            // Container.Bind<IMoveLevelPartsStrategy>().To<HorizontalMoveLevelPartsStrategy>().AsSingle();
-            Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
+            if (_projectConfig.GameplayConfig.horizontalMode)
+            {
+                Container.Bind<IMoveLevelPartsStrategy>().To<HorizontalMoveLevelPartsStrategy>().AsSingle();
+            }
+            else
+            {
+                Container.Bind<IMoveLevelPartsStrategy>().To<VerticalMoveLevelPartsStrategy>().AsSingle();
+            }
         }
 
         private void BindObjectPool()

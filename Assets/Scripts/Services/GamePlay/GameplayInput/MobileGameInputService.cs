@@ -7,7 +7,7 @@ namespace Services.GamePlay.GameplayInput
 {
     public class MobileGameInputService : IGameInputService, ITickable, IDisposable
     {
-        private readonly ProjectConfig _projectConfig;
+        private readonly GameplayConfig _gameplayConfig;
         public event Action<Vector2> OnMoveDirection;
         
         private readonly InputActions _inputActions;
@@ -17,9 +17,9 @@ namespace Services.GamePlay.GameplayInput
         private Vector2 _startTouchPosition;
         private Vector2 _endTouchPosition;
 
-        public MobileGameInputService(ProjectConfig projectConfig)
+        public MobileGameInputService(GameplayConfig gameplayConfig)
         {
-            _projectConfig = projectConfig;
+            _gameplayConfig = gameplayConfig;
             _inputActions = new InputActions();
             _inputActions.Mobile.Enable();
 
@@ -60,9 +60,9 @@ namespace Services.GamePlay.GameplayInput
 
         private bool CheckSwipeDetected()
         {
-            return _endTouchTime - _startTouchTime < _projectConfig.SwipeTimeThreshold
+            return _endTouchTime - _startTouchTime < _gameplayConfig.SwipeTimeThreshold
                    ||
-                   Vector2.Distance(_endTouchPosition, _startTouchPosition) > _projectConfig.SwipeDistanceThreshold;
+                   Vector2.Distance(_endTouchPosition, _startTouchPosition) > _gameplayConfig.SwipeDistanceThreshold;
         }
 
         private void DropValues()

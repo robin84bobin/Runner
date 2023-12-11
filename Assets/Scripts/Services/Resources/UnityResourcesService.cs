@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 
 namespace Services
 {
@@ -43,6 +44,12 @@ namespace Services
         {
             var o = await Resources.LoadAsync<GameObject>(path).ToUniTask();
             return o as GameObject;
+        }
+
+        public async UniTask<T> LoadAsset<T>(string path) where T :Object
+        {
+            var o = await Resources.LoadAsync<T>(path).ToUniTask();
+            return o as T;
         }
 
         public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)

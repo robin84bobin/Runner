@@ -10,6 +10,7 @@ namespace Services
         UniTask<string> LoadTextFile(string path);
         UniTask<T> LoadComponentFromPrefab<T>(string path) where T:UnityEngine.Object;
         UniTask<GameObject> LoadPrefab(string path);
+        UniTask<T> LoadAsset<T>(string path) where T :Object;
         UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent);
     }
 }

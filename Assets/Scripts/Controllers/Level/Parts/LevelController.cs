@@ -17,7 +17,7 @@ namespace Gameplay.Level.Parts
         private readonly GameCurrentLevelService _gameCurrentLevelService;
         private readonly ObjectPool _pool;
         private readonly IMoveLevelPartsStrategy _moveStrategy;
-        private readonly ProjectConfig _config;
+        private readonly GameplayConfig _config;
         private readonly CatalogDataRepository _catalogDataRepository;
         private readonly HeroModel _heroModel;
 
@@ -37,7 +37,7 @@ namespace Gameplay.Level.Parts
             GameCurrentLevelService gameCurrentLevelService, 
             ObjectPool pool,
             IMoveLevelPartsStrategy moveStrategy,
-            ProjectConfig config,
+            GameplayConfig config,
             CatalogDataRepository catalogDataRepository
         )
         {

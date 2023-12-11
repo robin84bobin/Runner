@@ -14,12 +14,14 @@ namespace Bootstrap
         [Inject] private IResourcesService _resourcesService;
         [Inject] private CatalogDataRepository _catalogRepository;
         [Inject] private UserDataRepository _userRepository;
+        [Inject] private ProjectConfig _projectConfig;
 
         private CommandSerialSequence _commandSequence;
     
         async void Start()
         {
             _commandSequence = new CommandSerialSequence(
+                new InitConfigsCommand(_projectConfig, _resourcesService),
                 new InitDataRepositoryCommand(_catalogRepository),
                 new InitDataRepositoryCommand(_userRepository)
             );

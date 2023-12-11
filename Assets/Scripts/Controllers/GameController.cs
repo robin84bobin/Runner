@@ -19,7 +19,7 @@ namespace Gameplay.Level
         private GameCurrentLevelService _currentLevelService;
         private CatalogDataRepository _catalogDataRepository;
         private LevelController _levelController;
-        private ProjectConfig _config;
+        private GameplayConfig _gameplayConfig;
         private IGameInputService _inputService;
         private IGameModel _gameModel;
         
@@ -34,11 +34,11 @@ namespace Gameplay.Level
             IResourcesService resourcesService,
             CatalogDataRepository catalogDataRepository,
             LevelController levelController,
-            ProjectConfig config,
+            GameplayConfig gameplayConfig,
             IGameInputService inputService)
         {
             _gameModel = gameModel;
-            _config = config;
+            _gameplayConfig = gameplayConfig;
             _inputService = inputService;
             _levelController = levelController;
             _catalogDataRepository = catalogDataRepository;
@@ -84,7 +84,7 @@ namespace Gameplay.Level
             _heroHeightController.Setup(_gameModel.HeroModel, -heroSpawnPoint.position.z);
             
             _heroMoveController = go.GetComponent<InputMoveController>();
-            _heroMoveController.Setup(_config, _inputService, partsContainer);
+            _heroMoveController.Setup(_gameplayConfig, _inputService, partsContainer);
         }
     }
 }

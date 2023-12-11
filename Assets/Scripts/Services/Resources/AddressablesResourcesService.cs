@@ -36,6 +36,13 @@ namespace Services
             return gameObject;
         }
 
+        public async UniTask<T> LoadAsset<T>(string path) where T :Object
+        {
+            var handle = Addressables.LoadAssetAsync<T>(path);
+            T asset =  await handle.Task;
+            return asset;
+        }
+
         public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
         {
             var instantiationParameters = new InstantiationParameters(position, quaternion, parent);
