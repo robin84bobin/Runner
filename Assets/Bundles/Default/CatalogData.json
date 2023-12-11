@@ -115,7 +115,7 @@
         "abilityType": 3,
         "paramType": 2,
         "title": "relax, man!",
-        "value": 0.05,
+        "value": 0.3,
         "duration": 10,
         "description": "slow down for {0} seconds"
       },

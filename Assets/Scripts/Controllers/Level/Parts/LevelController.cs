@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Gameplay.Level.Parts
 {
-    public class LevelController : ITickable, IDisposable
+    public class LevelController : IFixedTickable, IDisposable
     {
         private readonly IResourcesService _resourcesService;
         private readonly GameCurrentLevelService _gameCurrentLevelService;
@@ -82,7 +82,7 @@ namespace Gameplay.Level.Parts
             IsInitialized = true;
         }
 
-        void ITickable.Tick()
+        void IFixedTickable.FixedTick()
         {
             if (!IsInitialized) 
                 return;
@@ -149,5 +149,6 @@ namespace Gameplay.Level.Parts
             _parts = null;
             _currentParts = null;
         }
+
     }
 }

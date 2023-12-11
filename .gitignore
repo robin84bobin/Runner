@@ -5,3 +5,4 @@ Temp
 obj
 UserSettings
 *.csproj
+.utmp

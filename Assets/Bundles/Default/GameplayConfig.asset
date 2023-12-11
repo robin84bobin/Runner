@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7750792acea3457e8722afd8be3a33b2, type: 3}
   m_Name: GameplayConfig
   m_EditorClassIdentifier: 
-  DefaultSpeed: 0.1
-  MaxSpeed: 0.5
+  DefaultSpeed: 0.5
+  MaxSpeed: 5
   MaxHeight: 5
   VisibleLevelPartCount: 5
   MaxBonusCountPerPart: 1
