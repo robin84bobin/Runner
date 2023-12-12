@@ -1,5 +1,5 @@
 using Data.Repository;
-using Gameplay;
+using Model.Abilities;
 using Parameters;
 
 namespace Data.Catalog

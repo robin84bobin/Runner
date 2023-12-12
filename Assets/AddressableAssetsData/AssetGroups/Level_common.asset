@@ -23,17 +23,17 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb447288676d0ef4e8428f44adebc551
-    m_Address: Assets/Bundles/LevelCommon/LowPolyFoodLiteTexture_01.png
+    m_Address: LowPolyFoodLiteTexture_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: adb2f20aa957c364e9a392a9214ef5d6
-    m_Address: Assets/Bundles/LevelCommon/LP_FoodLite_BG.mat
+    m_Address: LP_FoodLite_BG
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: df7fe48a4062d5448bff2a0f1470487e
-    m_Address: Assets/Bundles/LevelCommon/LP_FoodLite_MAIN.mat
+    m_Address: LP_FoodLite_MAIN
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

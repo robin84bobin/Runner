@@ -7,8 +7,11 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
-namespace Services
+namespace Services.Resources
 {
+    /// <summary>
+    /// getting resources methods for unity resources
+    /// </summary>
     public class UnityResourcesService : IResourcesService
     {
         public void LoadScene(string sceneName, LoadSceneMode mode)
@@ -16,45 +19,46 @@ namespace Services
             SceneManager.LoadScene(sceneName, mode);
         }
 
-        public async UniTask<string> LoadTextFile(string path)
+        public async UniTask<string> LoadTextFile(string assetKey)
         {
             string text = string.Empty;
-            if (path.Contains("://"))
+            if (assetKey.Contains("://"))
             {
-                text = await LoadUrl(path);
+                text = await LoadUrl(assetKey);
                 return text;
             }
 
             await Task.Run(() =>
             {
-                if (!IsFileExist(path))
-                    File.CreateText(path).Close();
-                text = File.ReadAllText(path);
+                if (!IsFileExist(assetKey))
+                    File.CreateText(assetKey).Close();
+                text = File.ReadAllText(assetKey);
             });
 
             return text;
         }
 
-        public UniTask<T> LoadComponentFromPrefab<T>(string path) where T:UnityEngine.Object
+        public async UniTask<T> LoadComponentFromPrefab<T>(string assetKey) where T:UnityEngine.Object
         {
-            throw new NotImplementedException();
+            var gameObject = await LoadPrefab(assetKey);
+            return gameObject.GetComponent<T>();
         }
 
-        public async UniTask<GameObject> LoadPrefab(string path)
+        public async UniTask<GameObject> LoadPrefab(string assetKey)
         {
-            var o = await Resources.LoadAsync<GameObject>(path).ToUniTask();
+            var o = await UnityEngine.Resources.LoadAsync<GameObject>(assetKey).ToUniTask();
             return o as GameObject;
         }
 
-        public async UniTask<T> LoadAsset<T>(string path) where T :Object
+        public async UniTask<T> LoadAsset<T>(string assetKey) where T :Object
         {
-            var o = await Resources.LoadAsync<T>(path).ToUniTask();
+            var o = await UnityEngine.Resources.LoadAsync<T>(assetKey).ToUniTask();
             return o as T;
         }
 
-        public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
+        public async UniTask<GameObject> Instantiate(string assetKey, Vector3 position, Quaternion quaternion, Transform parent)
         {
-            var go = await LoadPrefab(prefabName);
+            var go = await LoadPrefab(assetKey);
             return GameObject.Instantiate(go, position, quaternion, parent);
         }
 

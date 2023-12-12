@@ -1,9 +1,7 @@
 namespace Data.Catalog
 {
-    public class BonusSpawnInfo : IWeightable
+    public class BonusSpawnInfo 
     {
         public string id;
-        public int weight;
-        public int Weight => weight;
     }
 }

@@ -1,8 +1,13 @@
+using Common.Commands;
 using Cysharp.Threading.Tasks;
-using Services;
+using Services.Resources;
 
-namespace Commands.Startup
+namespace Startup.Startup
 {
+    /// <summary>
+    /// load gameplay config from resources and set it into project config
+    /// *to make possible update gameplay config via bundles* 
+    /// </summary>
     public class InitConfigsCommand : Command
     {
         private readonly ProjectConfig _projectConfig;

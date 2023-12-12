@@ -1,38 +1,39 @@
+using Controllers.Hero;
+using Controllers.Level.Parts;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;
-using Gameplay.Hero;
-using Gameplay.Level.Parts;
-using Services;
+using Model;
 using Services.GamePlay;
 using Services.GamePlay.GameplayInput;
+using Services.Resources;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Level
+namespace Controllers
 {
+    /// <summary>
+    /// Builds game level and hero
+    /// </summary>
     public class GameController : MonoBehaviour
     {
         [SerializeField] private Transform heroSpawnPoint;
         [SerializeField] private Transform partsContainer;
 
         private IResourcesService _resourcesService;
-        private GameCurrentLevelService _currentLevelService;
-        private CatalogDataRepository _catalogDataRepository;
+        private GameLevelService _levelService;
         private LevelController _levelController;
         private GameplayConfig _gameplayConfig;
         private IGameInputService _inputService;
-        private IGameModel _gameModel;
+        private GameModel _gameModel;
         
-        private InputMoveController _heroMoveController;
+        private HeroMoveController _heroMoveController;
         private BonusCollisionController _bonusCollisionController;
-        private HeroHeightController _heroHeightController;
 
         [Inject]
         public void Construct(
-            IGameModel gameModel,
-            GameCurrentLevelService currentLevelService,
+            GameModel gameModel,
+            GameLevelService levelService,
             IResourcesService resourcesService,
-            CatalogDataRepository catalogDataRepository,
             LevelController levelController,
             GameplayConfig gameplayConfig,
             IGameInputService inputService)
@@ -41,14 +42,17 @@ namespace Gameplay.Level
             _gameplayConfig = gameplayConfig;
             _inputService = inputService;
             _levelController = levelController;
-            _catalogDataRepository = catalogDataRepository;
             _resourcesService = resourcesService;
-            _currentLevelService = currentLevelService;
+            _levelService = levelService;
         }
 
         private async void Start()
         {
+            //TODO show overlay UI to hide building level 
+            //TODO disable IGameplayInputService
             await BuildLevel();
+            //TODO show start button in overlay UI 
+            //TODO on start button click - hide overlay UI and enable IGameplayInputService
         }
 
 
@@ -64,27 +68,24 @@ namespace Gameplay.Level
 
         private async UniTask CreateLevelParts()
         {
-            PartSpawnInfo[] partSpawnInfos = _currentLevelService.LevelData.parts;
+            PartSpawnInfo[] partSpawnInfos = _levelService.LevelData.parts;
             await _levelController.CreateParts(partSpawnInfos, partsContainer);
         }
 
         private async UniTask SpawnHero()
         {
             var go = await _resourcesService.Instantiate(
-                _currentLevelService.GetHeroPrefabName(),
+                _levelService.GetHeroPrefabName(),
                 heroSpawnPoint.position,
                 transform.rotation,
                 null
             );
 
             _bonusCollisionController = go.GetComponent<BonusCollisionController>();
-            _bonusCollisionController.Setup(_gameModel);
+            _bonusCollisionController.Setup(_gameModel.AbilitiesModel);
             
-            _heroHeightController = go.GetComponent<HeroHeightController>();
-            _heroHeightController.Setup(_gameModel.HeroModel, -heroSpawnPoint.position.z);
-            
-            _heroMoveController = go.GetComponent<InputMoveController>();
-            _heroMoveController.Setup(_gameplayConfig, _inputService, partsContainer);
+            _heroMoveController = go.GetComponent<HeroMoveController>();
+            _heroMoveController.Setup(_gameplayConfig, _inputService, partsContainer, _gameModel.HeroModel);
         }
     }
 }

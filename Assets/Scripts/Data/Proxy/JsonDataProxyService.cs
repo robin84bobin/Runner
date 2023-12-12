@@ -4,11 +4,14 @@ using System.IO;
 using Cysharp.Threading.Tasks;
 using Data.Repository;
 using InternalNewtonsoft.Json.Linq;
-using Services;
+using Services.Resources;
 using UnityEngine;
 
 namespace Data.Proxy
 {
+    /// <summary>
+    /// get/save data to json file data source
+    /// </summary>
     internal class JsonDataProxyService: IDataProxyService
     {
         private IResourcesService _resourcesService;

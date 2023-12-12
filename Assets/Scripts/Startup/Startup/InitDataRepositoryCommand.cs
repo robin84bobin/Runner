@@ -1,8 +1,12 @@
+using Common.Commands;
 using Cysharp.Threading.Tasks;
 using Data.Repository;
 
-namespace Commands.Startup
+namespace Startup.Startup
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class InitDataRepositoryCommand : Command
     {
         private BaseDataRepository _baseDataRepository;

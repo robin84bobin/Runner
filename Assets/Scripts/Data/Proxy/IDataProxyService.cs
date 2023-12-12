@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data.Repository;
 using Services;
+using Services.Resources;
 
 namespace Data.Proxy
 {
+    /// <summary>
+    /// presents the contract for get/save data to data source
+    /// (database, json file, etc..)
+    /// </summary>
     public interface IDataProxyService
     {
         /// <summary>

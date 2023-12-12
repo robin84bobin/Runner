@@ -5,6 +5,9 @@ using Zenject;
 
 namespace Services.GamePlay.GameplayInput
 {
+    /// <summary>
+    /// detects swipes direction  
+    /// </summary>
     public class MobileGameInputService : IGameInputService, ITickable, IDisposable
     {
         private readonly GameplayConfig _gameplayConfig;

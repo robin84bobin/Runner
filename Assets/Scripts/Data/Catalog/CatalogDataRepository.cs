@@ -1,10 +1,12 @@
 using Data.Proxy;
 using Data.Repository;
-using Services;
-using Unity.VisualScripting;
+using Services.Resources;
 
 namespace Data.Catalog
 {
+    /// <summary>
+    /// store game data types items
+    /// </summary>
     public class CatalogDataRepository : BaseDataRepository
     {
         public DataStorage<LevelData> Levels;

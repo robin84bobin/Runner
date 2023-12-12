@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Commands;
-using Commands.Data;
+using Common.Commands;
 using Cysharp.Threading.Tasks;
 using Data.Proxy;
 
 namespace Data.Repository
 {
+    /// <summary>
+    /// store different types of data in different storages
+    /// </summary>
     public abstract class BaseDataRepository 
     {
         public List<Command> InitStoragesCommands { get; }
@@ -25,8 +27,6 @@ namespace Data.Repository
 
         public async UniTask Init()
         {
-            //TODO initialize data proxy by separate command outside of repository
-            
             DataProxyService.OnInitialized += OnDataInitComplete;
             await DataProxyService.Init();
         }

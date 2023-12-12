@@ -1,30 +1,34 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 namespace Services.GamePlay.GameplayInput
 {
-    public class StandaloneGameInputService : IGameInputService
+    /// <summary>
+    /// detects input axis directions  
+    /// </summary>
+    public class StandaloneGameInputService : IGameInputService, ITickable
     {
         public event Action<Vector2> OnMoveDirection;
-        public Vector2 GetInputMoveDirection() => new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+
         public void Tick()
         {
             ReadInputValues();
         }
 
-        public void LateTick()
-        {
-            DropInputValues();
-        }
-
         private void ReadInputValues()
         {
-            //TODO
+            Vector2 vector = GetInputMoveDirection();
+            
+            if (vector.Equals(Vector2.zero))
+                return;
+            
+            OnMoveDirection?.Invoke(vector);
         }
 
-        private void DropInputValues()
+        private Vector2 GetInputMoveDirection()
         {
-            //TODO
+            return new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
     }
 }

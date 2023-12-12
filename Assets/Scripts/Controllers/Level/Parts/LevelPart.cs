@@ -1,19 +1,23 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Controllers.Bonuses;
+using Cysharp.Threading.Tasks;
 using Data.Catalog;
-using Gameplay.Bonuses;
-using Services;
+using Services.Resources;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Gameplay.Level.Parts
+namespace Controllers.Level.Parts
 {
+    /// <summary>
+    /// part which level consist of
+    /// contains and spawn bonuses inside  
+    /// </summary>
     public class LevelPart: MonoBehaviour
     {
         [SerializeField] private Renderer _renderer;
         [SerializeField] private Transform[] _bonusSpawnPoints;
         public Vector3 GetSize() => _renderer.bounds.size;
 
-        public async UniTask Init(BonusSpawnInfo[] bonuses, int maxBonusCount, CatalogDataRepository catalogDataRepository,
+        public async UniTask SpawnBonuses(BonusSpawnInfo[] bonuses, int maxBonusCount, CatalogDataRepository catalogDataRepository,
             IResourcesService resourcesService)
         {
             var bonusCount = Random.Range(0, maxBonusCount + 1);
@@ -31,9 +35,14 @@ namespace Gameplay.Level.Parts
                 var spawnPoint = _bonusSpawnPoints[spawnPointIndex];
 
                 string assetKey = $"Bonus{bonusData.Id}";
-                var bonusGo = await resourcesService.Instantiate(assetKey, spawnPoint.position, Quaternion.identity, spawnPoint.parent);
+                var bonusGo = await resourcesService.Instantiate(
+                    assetKey, 
+                    spawnPoint.position, 
+                    Quaternion.identity, 
+                    spawnPoint.parent);
+                
                 var bonusController = bonusGo.GetComponent<BonusController>();
-                bonusController.Setup(bonusData);
+                bonusController.Setup(bonusSpawnInfo.id);
             }
         }
     }

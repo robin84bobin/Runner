@@ -1,15 +1,17 @@
-using Data.Catalog;
 using UnityEngine;
 
-namespace Gameplay.Bonuses
+namespace Controllers.Bonuses
 {
+    /// <summary>
+    /// Component to store bonusId of bonus for processing by collision of gameobject
+    /// </summary>
     public class BonusController : MonoBehaviour
     {
-        public BonusData Data { get; private set; }
+        public string BonusId { get; private set; }
 
-        public void Setup(BonusData data)
+        public void Setup(string bonusId)
         {
-            Data = data;
+            BonusId = bonusId;
         }
 
         public void OnApplied()

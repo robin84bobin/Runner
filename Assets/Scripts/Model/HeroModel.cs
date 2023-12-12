@@ -1,32 +1,29 @@
 using System;
 using System.Collections.Generic;
 using Parameters;
-using Zenject;
 
-namespace Gameplay.Hero
+namespace Model
 {
-    public class HeroModel: IInitializable, IDisposable
+    /// <summary>
+    /// contains hero's current state parameters
+    /// </summary>
+    public class HeroModel: IDisposable, IHeroParamContainer
     {
-        public readonly Parameter Speed;
-        public readonly Parameter Height;
+        public readonly ReactiveParameter Speed;
+        public readonly ReactiveParameter Height;
 
-        public Dictionary<ParamName, Parameter> Parameters { get; private set; }
+        public Dictionary<ParamName, ReactiveParameter> Parameters { get; }
         
         public HeroModel(GameplayConfig config)
         {
-            Speed = new Parameter(ParamName.SPEED, config.DefaultSpeed, config.MaxSpeed, 0f);
-            Height = new Parameter(ParamName.HEIGHT, 0, config.MaxHeight, 0);
+            Speed = new ReactiveParameter(ParamName.SPEED, config.DefaultSpeed, config.MaxSpeed, 0f);
+            Height = new ReactiveParameter(ParamName.HEIGHT, 0, config.MaxHeight, 0);
 
-            Parameters = new Dictionary<ParamName, Parameter>()
+            Parameters = new Dictionary<ParamName, ReactiveParameter>()
             {
                 { ParamName.SPEED, Speed },
                 { ParamName.HEIGHT, Height },
             };
-        }
-
-        public void Initialize()
-        {
-           //Todo ?
         }
 
         public void Dispose()

@@ -1,33 +1,35 @@
-using System;
 using Data.Catalog;
-using Gameplay.Hero;
-using Parameters;
 using UnityEngine;
 
-namespace Gameplay
+namespace Model.Abilities
 {
+    /// <summary>
+    /// base class for ability functionality
+    /// controls life time of ability
+    /// </summary>
     public abstract class BaseAbilityModel
     {
         public bool IsFinished { get; private set; }
-        public ParamName ParamName => _data.paramType;
+        
+        public AbilityData Data { get; }
+        public float TotalSeconds { get; private set; }
+        
+        protected readonly AbilitiesModel AbilitiesModel;
+        private float _startTime;
+        private float _finishTime;
 
-        protected readonly HeroModel _heroModel;
-        protected readonly  AbilityData _data;
 
-        protected float _startTime;
-        protected float _finishTime;
-
-        protected BaseAbilityModel(HeroModel heroModel, AbilityData data)
+        protected BaseAbilityModel(AbilitiesModel abilitiesModel, AbilityData data)
         {
-            _heroModel = heroModel;
-            _data = data;
+            AbilitiesModel = abilitiesModel;
+            Data = data;
         }
 
         public virtual void Start()
         {
             _startTime = Time.time;
-            _finishTime = _startTime + _data.duration;
-            Debug.Log($"Ability {_data.title} Start!");
+            _finishTime = _startTime + Data.duration;
+            Debug.Log($"Ability {Data.title} Start!");
         }
 
         public void Update()
@@ -38,16 +40,14 @@ namespace Gameplay
             }
             else
             {
-                double totalSeconds = _finishTime - Time.time;
-                TimeSpan time = TimeSpan.FromSeconds(totalSeconds);
-                Debug.Log($"Ability {_data.title} time: {time.ToString("hh':'mm':'ss")}");
+                TotalSeconds = _finishTime - Time.time;
             }
         }
 
         public virtual void Finish()
         {
             IsFinished = true;
-            Debug.Log($"Ability {_data.title} Finished!");
+            Debug.Log($"Ability {Data.title} Finished!");
         }
     }
 }

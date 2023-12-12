@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using Controllers.Level.Parts.PartsMoving;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;
-using Gameplay.Hero;
-using Gameplay.Level.Parts.PartsMoving;
-using Services;
+using Model;
 using Services.GamePlay;
+using Services.Resources;
 using UnityEngine;
 using Zenject;
 
-namespace Gameplay.Level.Parts
+namespace Controllers.Level.Parts
 {
+    /// <summary>
+    /// controls spawning and moving of level parts
+    /// spawning bonuses etc.
+    /// </summary>
     public class LevelController : IFixedTickable, IDisposable
     {
         private readonly IResourcesService _resourcesService;
-        private readonly GameCurrentLevelService _gameCurrentLevelService;
-        private readonly ObjectPool _pool;
+        private readonly GameLevelService _gameLevelService;
         private readonly IMoveLevelPartsStrategy _moveStrategy;
         private readonly GameplayConfig _config;
         private readonly CatalogDataRepository _catalogDataRepository;
@@ -23,19 +26,19 @@ namespace Gameplay.Level.Parts
 
         private Transform _container;
 
-        private List<LevelPart> _parts;
+        private PartSpawnInfo[] _partInfos;
         private List<LevelPart> _currentParts;
 
         int _lastPartIndex = -1;
         bool IsInitialized = false;
+        private PartSpawnInfo[] _partSpawnInfos;
 
         private float MoveSpeed => _heroModel.Speed.Value;
 
         public LevelController(
-            IGameModel gameModel,
+            GameModel gameModel,
             IResourcesService resourcesService, 
-            GameCurrentLevelService gameCurrentLevelService, 
-            ObjectPool pool,
+            GameLevelService gameLevelService, 
             IMoveLevelPartsStrategy moveStrategy,
             GameplayConfig config,
             CatalogDataRepository catalogDataRepository
@@ -43,8 +46,7 @@ namespace Gameplay.Level.Parts
         {
             _heroModel = gameModel.HeroModel;
             _resourcesService = resourcesService;
-            _gameCurrentLevelService = gameCurrentLevelService;
-            _pool = pool;
+            _gameLevelService = gameLevelService;
             _moveStrategy = moveStrategy;
             _config = config;
             _catalogDataRepository = catalogDataRepository;
@@ -54,22 +56,7 @@ namespace Gameplay.Level.Parts
         {
             _container = container;
             _moveStrategy.Init(_container);
-            _parts = new List<LevelPart>();
-        
-            foreach (var partSpawnInfo in partSpawnInfos)
-            {
-                var partPrefabName = _gameCurrentLevelService.GetPartPrefabName(partSpawnInfo.id);
-            
-                //TODO instantiate from pool
-                var partGO = await _resourcesService.Instantiate( 
-                                                                            partPrefabName, 
-                                                                            Vector3.zero, Quaternion.identity, 
-                                                                            _pool.containerObject.transform
-                                                                            );
-                LevelPart part = partGO.GetComponent<LevelPart>();
-                _parts.Add(part);
-                part.gameObject.SetActive(false);
-            }
+            _partInfos = partSpawnInfos;
         
             _currentParts = new List<LevelPart>();
 
@@ -105,19 +92,24 @@ namespace Gameplay.Level.Parts
             SpawnPart(part);
         }
 
-        private async UniTask SpawnPart(LevelPart part)
+        private async UniTask SpawnPart(PartSpawnInfo partSpawnInfo)
         {
-            //TODO get from pool
-            GameObject partGo = GameObject.Instantiate(part.gameObject, _container);
-            LevelPart newPart = partGo.GetComponent<LevelPart>();
-
-            //TODO move creation to factory?
-            var bonuses = _gameCurrentLevelService.LevelData.bonuses;
-            await newPart.Init(bonuses, _config.MaxBonusCountPerPart, _catalogDataRepository, _resourcesService);
+            var partAssetKey = _gameLevelService.GetPartPrefabName(partSpawnInfo.id);
+           
+            var partGO = await _resourcesService.Instantiate( 
+                partAssetKey, 
+                Vector3.zero, 
+                _container.rotation, 
+                _container
+            );
             
-            partGo.transform.position = _moveStrategy.GetNewPartPosition(newPart, _currentParts);
-            partGo.transform.rotation = _container.rotation;
-            partGo.SetActive(true);
+            LevelPart newPart = partGO.GetComponent<LevelPart>();
+
+            var bonuses = _gameLevelService.LevelData.bonuses;
+            await newPart.SpawnBonuses(bonuses, _config.MaxBonusCountPerPart, _catalogDataRepository, _resourcesService);
+            
+            partGO.transform.position = _moveStrategy.GetNewPartPosition(newPart, _currentParts);
+            partGO.SetActive(true);
         
             _currentParts.Add(newPart);
         }
@@ -129,24 +121,25 @@ namespace Gameplay.Level.Parts
         
             _currentParts.Remove(part);
             
-            GameObject.Destroy(part.gameObject); //TODO to pool 
+            GameObject.Destroy(part.gameObject); 
         }
 
-        private LevelPart NextPart()
+        private PartSpawnInfo NextPart()
         {
-            _lastPartIndex = _lastPartIndex++ < _parts.Count - 1 ? _lastPartIndex : 0;
-            return _parts[_lastPartIndex];
+            _lastPartIndex = _lastPartIndex++ < _partInfos.Length - 1 ? _lastPartIndex : 0;
+            return _partInfos[_lastPartIndex];
         }
 
         void IDisposable.Dispose()
         {
             IsInitialized = false;
         
-            foreach (var part in _parts)
+            foreach (var part in _currentParts)
             {
-                GameObject.Destroy(part); //TODO clear from pool  -> unload addressables assets 
+                GameObject.Destroy(part); 
             }
-            _parts = null;
+            
+            _partInfos = null;
             _currentParts = null;
         }
 

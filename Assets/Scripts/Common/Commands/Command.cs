@@ -1,8 +1,12 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 
-namespace Commands
+namespace Common.Commands
 {
+    /// <summary>
+    /// Execute some asynchronous actions
+    /// and provide event on execution progress and complete
+    /// </summary>
     public abstract class Command
     {
         public event Action OnComplete;

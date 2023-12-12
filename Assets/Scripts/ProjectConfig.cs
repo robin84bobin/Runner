@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Settings for application initialization
+/// </summary>
 [CreateAssetMenu(menuName = "Create ProjectConfig", fileName = "ProjectConfig", order = 0)]
 public class ProjectConfig :  ScriptableObject
 {

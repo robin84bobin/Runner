@@ -1,6 +1,6 @@
-﻿using Gameplay;
-using Gameplay.Level.Parts;
-using Gameplay.Level.Parts.PartsMoving;
+﻿using Controllers.Level.Parts;
+using Controllers.Level.Parts.PartsMoving;
+using Model;
 using Services.GamePlay.GameplayInput;
 using UnityEngine;
 using Zenject;
@@ -9,15 +9,13 @@ namespace DI.Gameplay
 {
     public class GameplayInstaller : MonoInstaller
     {
-        [SerializeField] private ObjectPool _objectPool;
         private ProjectConfig _projectConfig;
 
         public override void InstallBindings()
         {
             BindConfigs();
             BindPlatformInput();
-            BindModel();
-            BindObjectPool();
+            BindModels();
             BindLevelParts();
         }
 
@@ -40,10 +38,6 @@ namespace DI.Gameplay
             }
         }
 
-        private void BindObjectPool()
-        {
-            Container.Bind<ObjectPool>().FromInstance(_objectPool).AsSingle();
-        }
 
 #if UNITY_ANDROID || UNITY_IOS
         private void BindPlatformInput()
@@ -57,9 +51,11 @@ namespace DI.Gameplay
         }
 #endif
 
-        private void BindModel()
+        private void BindModels()
         {
-            Container.BindInterfacesTo<GameModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AbilitiesModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<HeroModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
         }
     }
 }

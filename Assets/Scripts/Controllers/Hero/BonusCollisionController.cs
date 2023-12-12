@@ -1,15 +1,19 @@
-using Gameplay.Bonuses;
+using Controllers.Bonuses;
+using Model;
 using UnityEngine;
 
-namespace Gameplay.Hero
+namespace Controllers.Hero
 {
+    /// <summary>
+    /// Applies bonus if hits it by trigger collision 
+    /// </summary>
     public class BonusCollisionController : MonoBehaviour
     {
-        private IBonusApplier _bonusApplier;
+        private AbilitiesModel _abilitiesModel;
 
-        public void Setup(IBonusApplier bonusApplier)
+        public void Setup(AbilitiesModel abilitiesModel)
         {
-            _bonusApplier = bonusApplier;
+            _abilitiesModel = abilitiesModel;
         }
         
         void OnTriggerEnter(Collider other)
@@ -22,7 +26,7 @@ namespace Gameplay.Hero
             var bonusControllers = otherGo.GetComponents<BonusController>();
             foreach (var bonusController in bonusControllers)
             {
-                _bonusApplier.ApplyBonus(bonusController.Data);
+                _abilitiesModel.ApplyAbilities(bonusController.BonusId);
                 bonusController.OnApplied();
             }
         }

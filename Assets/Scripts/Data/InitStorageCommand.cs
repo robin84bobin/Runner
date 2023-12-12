@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Common.Commands;
 using Cysharp.Threading.Tasks;
 using Data.Proxy;
 using Data.Repository;
 using UnityEngine;
 
-namespace Commands.Data
+namespace Data
 {
 
+    /// <summary>
+    /// loads data items from data proxy to data storage
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class InitStorageCommand<T> : Command where T : DataItem, new()
     {
         private IDataProxyService _dataProxyService;

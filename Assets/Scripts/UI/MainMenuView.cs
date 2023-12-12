@@ -11,12 +11,18 @@ namespace UI
 {
     public class MainMenuView : MonoBehaviour
     {
-        [Inject] private GameCurrentLevelService _gameCurrentLevelService;
-        [Inject] public CatalogDataRepository CatalogDataRepository;
-    
         [SerializeField] private Button startButtonTemplate;
         [SerializeField] private Transform buttonsContainer;
+        private GameLevelService _gameLevelService;
+        private CatalogDataRepository _catalogDataRepository;
         private Button[] _startButtons;
+
+        [Inject]
+        public void Construct(GameLevelService gameLevelService, CatalogDataRepository catalogDataRepository)
+        {
+            _gameLevelService = gameLevelService;
+            _catalogDataRepository = catalogDataRepository;
+        }
 
         void Start()
         {
@@ -25,7 +31,7 @@ namespace UI
 
         private void CreateButtons()
         {
-            List<LevelData> levels = CatalogDataRepository.Levels.GetAll().OrderBy(level => level.Id).ToList();
+            List<LevelData> levels = _catalogDataRepository.Levels.GetAll().OrderBy(level => level.Id).ToList();
             int levelsCount = levels.Count;
 
             _startButtons = new Button[levelsCount];
@@ -47,7 +53,7 @@ namespace UI
 
         private void LoadLevel(string levelId = "1")
         {
-            _gameCurrentLevelService.StartLevel(levelId);
+            _gameLevelService.StartLevel(levelId);
         }
 
         void OnDestroy()

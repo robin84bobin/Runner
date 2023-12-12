@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay.Level.Parts.PartsMoving
+namespace Controllers.Level.Parts.PartsMoving
 {
+    /// <summary>
+    /// provides methods to get values to move level parts
+    /// </summary>
     public interface IMoveLevelPartsStrategy
     {
         void Init(Transform container);

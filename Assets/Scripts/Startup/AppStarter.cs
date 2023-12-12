@@ -1,29 +1,36 @@
-using Commands;
-using Commands.Startup;
 using Common;
+using Common.Commands;
 using Data.Catalog;
-using Data.User;
-using Services;
+using Services.Resources;
+using Startup.Startup;
 using UnityEngine;
 using Zenject;
 
-namespace Bootstrap
+namespace Startup
 {
     public class AppStarter : MonoBehaviour
     {
-        [Inject] private IResourcesService _resourcesService;
-        [Inject] private CatalogDataRepository _catalogRepository;
-        [Inject] private UserDataRepository _userRepository;
-        [Inject] private ProjectConfig _projectConfig;
-
+        private IResourcesService _resourcesService;
+        private CatalogDataRepository _catalogRepository;
+        private ProjectConfig _projectConfig;
         private CommandSerialSequence _commandSequence;
-    
+
+        [Inject]
+        public void Construct(
+            IResourcesService resourcesService, 
+            CatalogDataRepository catalogRepository, 
+            ProjectConfig projectConfig)
+        {
+            _resourcesService = resourcesService;
+            _catalogRepository = catalogRepository;
+            _projectConfig = projectConfig;
+        }
+
         async void Start()
         {
             _commandSequence = new CommandSerialSequence(
                 new InitConfigsCommand(_projectConfig, _resourcesService),
-                new InitDataRepositoryCommand(_catalogRepository),
-                new InitDataRepositoryCommand(_userRepository)
+                new InitDataRepositoryCommand(_catalogRepository)
             );
             _commandSequence.OnComplete += OnInitComplete;
             _commandSequence.OnProgress += OnInitProgress;

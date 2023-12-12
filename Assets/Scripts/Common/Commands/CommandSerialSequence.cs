@@ -2,8 +2,11 @@
 using Cysharp.Threading.Tasks;
 using ModestTree;
 
-namespace Commands
+namespace Common.Commands
 {
+    /// <summary>
+    /// Executes commands in serial mode - one by one
+    /// </summary>
     public class CommandSerialSequence : Command
     {
         protected Queue<Command> _queue;

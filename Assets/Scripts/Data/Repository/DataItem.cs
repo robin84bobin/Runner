@@ -3,7 +3,7 @@
 namespace Data.Repository
 {
     /// <summary>
-    /// base class to store some data item
+    /// base class to some data item
     /// </summary>
     public abstract class DataItem
     {

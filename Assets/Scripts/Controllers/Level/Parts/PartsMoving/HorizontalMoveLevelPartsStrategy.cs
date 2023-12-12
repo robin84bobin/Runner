@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Gameplay.Level.Parts.PartsMoving
+namespace Controllers.Level.Parts.PartsMoving
 {
+    /// <summary>
+    /// calculates values to move level parts in horizontal direction
+    /// </summary>
     public class HorizontalMoveLevelPartsStrategy : IMoveLevelPartsStrategy
     {
         private Transform _container;

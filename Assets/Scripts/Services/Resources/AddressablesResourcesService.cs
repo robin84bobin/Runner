@@ -4,8 +4,11 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Services
+namespace Services.Resources
 {
+    /// <summary>
+    /// getting resources methods for Addressables system
+    /// </summary>
     public class AddressablesResourcesService : IResourcesService
     {
         public async void LoadScene(string sceneName, LoadSceneMode mode)
@@ -14,39 +17,39 @@ namespace Services
             await handle.Task;
         }
 
-        public async UniTask<string> LoadTextFile(string path)
+        public async UniTask<string> LoadTextFile(string assetKey)
         {
-            var handle = Addressables.LoadAssetAsync<TextAsset>(path);
+            var handle = Addressables.LoadAssetAsync<TextAsset>(assetKey);
             var t =  await handle.Task;
             return t.text;
         }
 
-        public async UniTask<T> LoadComponentFromPrefab<T>(string path) where T:Object
+        public async UniTask<T> LoadComponentFromPrefab<T>(string assetKey) where T:Object
         {
-            var handle = Addressables.LoadAssetAsync<GameObject>(path);
+            var handle = Addressables.LoadAssetAsync<GameObject>(assetKey);
             var gameObject =  await handle.Task;
             var component = gameObject.GetComponent<T>();
             return component;
         }
 
-        public async UniTask<GameObject> LoadPrefab(string path)
+        public async UniTask<GameObject> LoadPrefab(string assetKey)
         {
-            var handle = Addressables.LoadAssetAsync<GameObject>(path);
+            var handle = Addressables.LoadAssetAsync<GameObject>(assetKey);
             var gameObject =  await handle.Task;
             return gameObject;
         }
 
-        public async UniTask<T> LoadAsset<T>(string path) where T :Object
+        public async UniTask<T> LoadAsset<T>(string assetKey) where T :Object
         {
-            var handle = Addressables.LoadAssetAsync<T>(path);
+            var handle = Addressables.LoadAssetAsync<T>(assetKey);
             T asset =  await handle.Task;
             return asset;
         }
 
-        public async UniTask<GameObject> Instantiate(string prefabName, Vector3 position, Quaternion quaternion, Transform parent)
+        public async UniTask<GameObject> Instantiate(string assetKey, Vector3 position, Quaternion quaternion, Transform parent)
         {
             var instantiationParameters = new InstantiationParameters(position, quaternion, parent);
-            return await Addressables.InstantiateAsync(prefabName, instantiationParameters).ToUniTask();
+            return await Addressables.InstantiateAsync(assetKey, instantiationParameters).ToUniTask();
         }
     }
 }

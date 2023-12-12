@@ -6,12 +6,13 @@ using UnityEngine;
 
 namespace Data.Repository
 {
+    /// <summary>
+    /// store concrete type of data items
+    /// </summary>
+     
     public class DataStorage<T> : IDataStorage where T : DataItem, new()
     {
-        public int Count
-        {
-            get { return _items.Count; }
-        }
+        public int Count => _items.Count;
 
         private bool ReadOnly { get; set; }
 
