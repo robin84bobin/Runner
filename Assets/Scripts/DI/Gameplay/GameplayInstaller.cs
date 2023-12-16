@@ -54,7 +54,7 @@ namespace DI.Gameplay
         private void BindModels()
         {
             Container.BindInterfacesAndSelfTo<AbilitiesModel>().AsSingle();
-            Container.BindInterfacesAndSelfTo<HeroModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ActorModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<GameModel>().AsSingle();
         }
     }

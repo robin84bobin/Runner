@@ -11,18 +11,18 @@ namespace Model.Abilities
     /// </summary>
     public class PlayerParamSimpleAbilityModel : BaseAbilityModel
     {
-        private readonly IHeroParamContainer _heroParamContainer;
+        private readonly IActorParamContainer _actorParamContainer;
         private ReactiveParameter _reactiveParameter;
 
-        public PlayerParamSimpleAbilityModel(IHeroParamContainer heroParamContainer,AbilitiesModel abilitiesModel, AbilityData data) 
+        public PlayerParamSimpleAbilityModel(IActorParamContainer actorParamContainer,AbilitiesModel abilitiesModel, AbilityData data) 
             : base(abilitiesModel, data)
         {
-            _heroParamContainer = heroParamContainer;
+            _actorParamContainer = actorParamContainer;
         }
 
         public override void Start()
         {
-            if (_heroParamContainer.Parameters.TryGetValue(Data.paramType, out _reactiveParameter) == false)
+            if (_actorParamContainer.Parameters.TryGetValue(Data.paramType, out _reactiveParameter) == false)
             {
                 Debug.LogError($"no parameter {Data.paramType} exist to apply ability {Data.title}");
                 Finish();

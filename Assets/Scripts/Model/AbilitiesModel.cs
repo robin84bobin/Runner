@@ -15,13 +15,13 @@ namespace Model
         public List<BaseAbilityModel> Abilities { get; } = new List<BaseAbilityModel>();
         
         private readonly CatalogDataRepository _catalogDataRepository;
-        private readonly HeroModel _heroModel;
+        private readonly ActorModel _actorModel;
         private readonly List<BaseAbilityModel> _abilitiesToRemove = new List<BaseAbilityModel>();
 
-        public AbilitiesModel(CatalogDataRepository catalogDataRepository, HeroModel heroModel)
+        public AbilitiesModel(CatalogDataRepository catalogDataRepository, ActorModel actorModel)
         {
             _catalogDataRepository = catalogDataRepository;
-            _heroModel = heroModel;
+            _actorModel = actorModel;
         }
 
         public void ApplyAbilities(string bonusId)
@@ -51,7 +51,7 @@ namespace Model
                 case AbilityType.Fly: 
                 case AbilityType.SpeedUp: 
                 case AbilityType.SlowDown: 
-                    return new PlayerParamSimpleAbilityModel(_heroModel, this, abilityData);
+                    return new PlayerParamSimpleAbilityModel(_actorModel, this, abilityData);
                 default: return default;
             }
         }

@@ -26,7 +26,7 @@ namespace Controllers
         private IGameInputService _inputService;
         private GameModel _gameModel;
         
-        private HeroMoveController _heroMoveController;
+        private ActorMoveController _actorMoveController;
         private BonusCollisionController _bonusCollisionController;
 
         [Inject]
@@ -84,8 +84,8 @@ namespace Controllers
             _bonusCollisionController = go.GetComponent<BonusCollisionController>();
             _bonusCollisionController.Setup(_gameModel.AbilitiesModel);
             
-            _heroMoveController = go.GetComponent<HeroMoveController>();
-            _heroMoveController.Setup(_gameplayConfig, _inputService, partsContainer, _gameModel.HeroModel);
+            _actorMoveController = go.GetComponent<ActorMoveController>();
+            _actorMoveController.Setup(_gameplayConfig, _inputService, partsContainer, _gameModel.ActorModel);
         }
     }
 }

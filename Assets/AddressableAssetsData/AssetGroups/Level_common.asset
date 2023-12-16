@@ -17,11 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 7b160ef19e530834db3cb177c2115fc8
   m_SerializeEntries:
-  - m_GUID: d87b5d91e3b41c54b8b2e1d975bf0d8e
-    m_Address: Hero Base
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb447288676d0ef4e8428f44adebc551
     m_Address: LowPolyFoodLiteTexture_01
     m_ReadOnly: 0
@@ -79,6 +74,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 819fd29936a3193458696f56287633f3
     m_Address: BonusMaterial 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b02bdaafd051c74db9c02ceb0eadfad
+    m_Address: Assets/Bundles/LevelCommon/Hero
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

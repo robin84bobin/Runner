@@ -22,7 +22,7 @@ namespace Controllers.Level.Parts
         private readonly IMoveLevelPartsStrategy _moveStrategy;
         private readonly GameplayConfig _config;
         private readonly CatalogDataRepository _catalogDataRepository;
-        private readonly HeroModel _heroModel;
+        private readonly ActorModel _actorModel;
 
         private Transform _container;
 
@@ -33,7 +33,7 @@ namespace Controllers.Level.Parts
         bool IsInitialized = false;
         private PartSpawnInfo[] _partSpawnInfos;
 
-        private float MoveSpeed => _heroModel.Speed.Value;
+        private float MoveSpeed => _actorModel.Speed.Value;
 
         public LevelController(
             GameModel gameModel,
@@ -44,7 +44,7 @@ namespace Controllers.Level.Parts
             CatalogDataRepository catalogDataRepository
         )
         {
-            _heroModel = gameModel.HeroModel;
+            _actorModel = gameModel.ActorModel;
             _resourcesService = resourcesService;
             _gameLevelService = gameLevelService;
             _moveStrategy = moveStrategy;
