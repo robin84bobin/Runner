@@ -82,10 +82,10 @@ namespace Controllers
             );
 
             _bonusCollisionController = go.GetComponent<BonusCollisionController>();
-            _bonusCollisionController.Setup(_gameModel.AbilitiesModel);
+            _bonusCollisionController.Setup(_gameModel.AbilityService, _gameModel.HeroModel);
             
             _actorMoveController = go.GetComponent<ActorMoveController>();
-            _actorMoveController.Setup(_gameplayConfig, _inputService, partsContainer, _gameModel.ActorModel);
+            _actorMoveController.Setup(_gameplayConfig, _inputService, partsContainer, _gameModel.HeroModel);
         }
     }
 }

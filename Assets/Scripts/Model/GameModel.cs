@@ -2,13 +2,13 @@ namespace Model
 {
     public class GameModel
     {
-        public ActorModel ActorModel { get; }
-        public AbilitiesModel AbilitiesModel { get; }
+        public ActorModel HeroModel { get; }
+        public AbilityService AbilityService { get; }
 
-        public GameModel(ActorModel actorModel, AbilitiesModel abilitiesModel)
+        public GameModel(ActorModel heroModel, AbilityService abilityService)
         {
-            ActorModel = actorModel;
-            AbilitiesModel = abilitiesModel;
+            HeroModel = heroModel;
+            AbilityService = abilityService;
         }
     }
 }

@@ -9,49 +9,69 @@ namespace Model
     /// <summary>
     /// create,store and remove active abilities
     /// </summary>
-    public class AbilitiesModel : ITickable
+    public class AbilityService : ITickable
     {
         public event Action OnAbilitiesUpdate;
         public List<BaseAbilityModel> Abilities { get; } = new List<BaseAbilityModel>();
         
         private readonly CatalogDataRepository _catalogDataRepository;
-        private readonly ActorModel _actorModel;
         private readonly List<BaseAbilityModel> _abilitiesToRemove = new List<BaseAbilityModel>();
 
-        public AbilitiesModel(CatalogDataRepository catalogDataRepository, ActorModel actorModel)
+        public AbilityService(CatalogDataRepository catalogDataRepository)
         {
             _catalogDataRepository = catalogDataRepository;
-            _actorModel = actorModel;
         }
 
-        public void ApplyAbilities(string bonusId)
+        public void ApplyAbilities(string bonusId, ActorModel actorModel)
         {
             var bonusData = _catalogDataRepository.Bonuses.Get(bonusId);
             foreach (var abilityId in bonusData.abilitiesIds)
             {
                 var abilityData = _catalogDataRepository.Abilities.Get(abilityId);
-                ApplyAbility(abilityData);
+                ApplyAbility(abilityData, actorModel);
             }
         }
 
-        private void ApplyAbility(AbilityData abilityData)
+        private void ApplyAbility(AbilityData abilityData, IActorParamContainer actor)
         {
-            var newAbility = CreateAbility(abilityData.abilityType, abilityData);
+            var newAbility = CreateAbility(abilityData.abilityType, abilityData, actor);
             if (newAbility == default)
                 return;
 
-            newAbility.Start();
+            OnPrepareAbilityStart(abilityData);
+            
+            newAbility.StartAbility();
             Abilities.Add(newAbility);
         }
 
-        private BaseAbilityModel CreateAbility(AbilityType abilityType, AbilityData abilityData)
+        private void OnPrepareAbilityStart(AbilityData newAbilityData)
+        {
+            switch (newAbilityData.abilityType)
+            {
+                case AbilityType.ActorParamUniqueAbility:
+                    TryDropSameParameterAbilities(newAbilityData);
+                    break;
+            }
+        }
+        
+        private void TryDropSameParameterAbilities(AbilityData newAbilityData)
+        {
+            foreach (var ability in Abilities)
+            {
+                if (ability.Data.paramType == newAbilityData.paramType)
+                {
+                    ability.FinishAbility();
+                }
+            }
+        }
+        
+
+        private BaseAbilityModel CreateAbility(AbilityType abilityType, AbilityData abilityData, IActorParamContainer actor)
         {
             switch (abilityType)
             { 
-                case AbilityType.Fly: 
-                case AbilityType.SpeedUp: 
-                case AbilityType.SlowDown: 
-                    return new PlayerParamSimpleAbilityModel(_actorModel, this, abilityData);
+                case AbilityType.ActorParamUniqueAbility: 
+                    return new ActorParameterUniqueAbility(actor, abilityData);
                 default: return default;
             }
         }
@@ -69,7 +89,7 @@ namespace Model
             
             foreach (var ability in Abilities)
             {
-                ability.Update();
+                ability.UpdateTime();
                 if (ability.IsFinished)
                 {
                     _abilitiesToRemove.Add(ability);

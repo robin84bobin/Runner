@@ -6,19 +6,19 @@ using Zenject;
 public class AbilitiesUIView : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-    private AbilitiesModel _abilitiesModel;
+    private AbilityService _abilityService;
 
     [Inject]
-    public void Construct(AbilitiesModel abilitiesModel)
+    public void Construct(AbilityService abilityService)
     {
-        _abilitiesModel = abilitiesModel;
-        _abilitiesModel.OnAbilitiesUpdate += OnAbilitiesUpdate;
+        _abilityService = abilityService;
+        _abilityService.OnAbilitiesUpdate += OnAbilityUpdate;
     }
 
-    private void OnAbilitiesUpdate()
+    private void OnAbilityUpdate()
     {
         string abilityText  = string.Empty;
-        foreach (var ability in _abilitiesModel.Abilities)
+        foreach (var ability in _abilityService.Abilities)
         {
             abilityText += $"{ability.Data.title}: \n " +
                            $"{string.Format(ability.Data.description, (int)ability.TotalSeconds)} \n";

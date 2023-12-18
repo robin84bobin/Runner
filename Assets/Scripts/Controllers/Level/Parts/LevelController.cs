@@ -44,7 +44,7 @@ namespace Controllers.Level.Parts
             CatalogDataRepository catalogDataRepository
         )
         {
-            _actorModel = gameModel.ActorModel;
+            _actorModel = gameModel.HeroModel;
             _resourcesService = resourcesService;
             _gameLevelService = gameLevelService;
             _moveStrategy = moveStrategy;

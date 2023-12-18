@@ -112,19 +112,21 @@
     "Abilities": [
       {
         "id": 1,
-        "abilityType": 3,
+        "abilityType": 1,
         "paramType": 2,
+        "paramAction": 1,
         "title": "relax, man!",
-        "value": 0.3,
+        "value": -0.4,
         "duration": 10,
         "description": "slow down for {0} seconds"
       },
       {
         "id": 2,
-        "abilityType": 2,
+        "abilityType": 1,
         "paramType": 2,
+        "paramAction": 1,
         "title": "coffee run!",
-        "value": 2,
+        "value": 1,
         "duration": 10,
         "description": "speed up for {0} seconds"
       },
@@ -132,6 +134,7 @@
         "id": 3,
         "abilityType": 1,
         "paramType": 1,
+        "paramAction": 1,
         "title": "flying fish!",
         "value": 5,
         "duration": 10,

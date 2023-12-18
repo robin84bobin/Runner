@@ -10,33 +10,30 @@ namespace Model.Abilities
     public abstract class BaseAbilityModel
     {
         public bool IsFinished { get; private set; }
-        
         public AbilityData Data { get; }
         public float TotalSeconds { get; private set; }
         
-        protected readonly AbilitiesModel AbilitiesModel;
         private float _startTime;
         private float _finishTime;
 
 
-        protected BaseAbilityModel(AbilitiesModel abilitiesModel, AbilityData data)
+        protected BaseAbilityModel(AbilityData data)
         {
-            AbilitiesModel = abilitiesModel;
             Data = data;
         }
 
-        public virtual void Start()
+        public virtual void StartAbility()
         {
             _startTime = Time.time;
             _finishTime = _startTime + Data.duration;
-            Debug.Log($"Ability {Data.title} Start!");
+            Debug.Log($"Ability {Data.title} StartAbility!");
         }
 
-        public void Update()
+        public void UpdateTime()
         {
             if (Time.time >= _finishTime)
             {
-                Finish();
+                FinishAbility();
             }
             else
             {
@@ -44,7 +41,7 @@ namespace Model.Abilities
             }
         }
 
-        public virtual void Finish()
+        public virtual void FinishAbility()
         {
             IsFinished = true;
             Debug.Log($"Ability {Data.title} Finished!");

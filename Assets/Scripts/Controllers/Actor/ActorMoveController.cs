@@ -84,11 +84,11 @@ namespace Controllers.Hero
                 return;
 
             int strafeAnimParam = inputMoveDirection.x < 0 ? StrafeLeftAnimParam : StrafeRightAnimParam;
-            animator?.SetBool(strafeAnimParam, true);
+            animator.SetBool(strafeAnimParam, true);
             
             await MoveAsyncTo(destination, _config.MoveTime);
             
-            animator?.SetBool(strafeAnimParam, false);
+            animator.SetBool(strafeAnimParam, false);
         }
 
         private async UniTask MoveAsyncTo(Vector3 destination, float moveTime)

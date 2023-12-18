@@ -9,11 +9,13 @@ namespace Controllers.Hero
     /// </summary>
     public class BonusCollisionController : MonoBehaviour
     {
-        private AbilitiesModel _abilitiesModel;
+        private AbilityService _abilityService;
+        private ActorModel _actorModel;
 
-        public void Setup(AbilitiesModel abilitiesModel)
+        public void Setup(AbilityService abilityService, ActorModel actorModel)
         {
-            _abilitiesModel = abilitiesModel;
+            _actorModel = actorModel;
+            _abilityService = abilityService;
         }
         
         void OnTriggerEnter(Collider other)
@@ -26,7 +28,7 @@ namespace Controllers.Hero
             var bonusControllers = otherGo.GetComponents<BonusController>();
             foreach (var bonusController in bonusControllers)
             {
-                _abilitiesModel.ApplyAbilities(bonusController.BonusId);
+                _abilityService.ApplyAbilities(bonusController.BonusId, _actorModel);
                 bonusController.OnApplied();
             }
         }
