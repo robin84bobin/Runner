@@ -14,7 +14,7 @@ namespace DI.Gameplay
         public override void InstallBindings()
         {
             BindConfigs();
-            BindPlatformInput();
+            BindPlatformDependencies();
             BindModels();
             BindLevelParts();
         }
@@ -39,15 +39,15 @@ namespace DI.Gameplay
         }
 
 
-#if UNITY_ANDROID || UNITY_IOS
-        private void BindPlatformInput()
+#if UNITY_EDITOR|| UNITY_STANDALONE
+        private void BindPlatformDependencies()
+        {
+            Container.BindInterfacesTo<StandaloneGameInputService>().AsSingle();
+        }
+#elif UNITY_ANDROID || UNITY_IOS && !UNITY_EDITOR
+        private void BindPlatformDependencies()
         {
             Container.BindInterfacesTo<MobileGameInputService>().AsSingle();
-        }
-#elif UNITY_EDITOR || UNITY_STANDALONE
-        private void BindPlatformInput()
-        {
-            Container.Bind<IGameInputService>().To<StandaloneGameInputService>().AsSingle();
         }
 #endif
 
