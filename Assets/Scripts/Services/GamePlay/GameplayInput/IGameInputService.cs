@@ -12,5 +12,6 @@ namespace Services.GamePlay.GameplayInput
         /// event for direction in screen coordinates
         /// </summary>
         event Action<Vector2> OnMoveDirection;
+        event Action OnJump;
     }
 }

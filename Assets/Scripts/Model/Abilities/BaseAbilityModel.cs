@@ -29,7 +29,7 @@ namespace Model.Abilities
             Debug.Log($"Ability {Data.title} StartAbility!");
         }
 
-        public void UpdateTime()
+        public void OnTick()
         {
             if (Time.time >= _finishTime)
             {

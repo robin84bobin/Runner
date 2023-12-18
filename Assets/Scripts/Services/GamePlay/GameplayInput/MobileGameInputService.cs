@@ -12,7 +12,8 @@ namespace Services.GamePlay.GameplayInput
     {
         private readonly GameplayConfig _gameplayConfig;
         public event Action<Vector2> OnMoveDirection;
-        
+        public event Action OnJump;
+
         private readonly InputActions _inputActions;
         private Vector2 _swipeDirection = new Vector2();
         private float _startTouchTime;

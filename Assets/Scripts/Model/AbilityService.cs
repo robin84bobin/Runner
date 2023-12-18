@@ -78,6 +78,15 @@ namespace Model
 
         void ITickable.Tick()
         {
+            foreach (var ability in Abilities)
+            {
+                ability.OnTick();
+                if (ability.IsFinished)
+                {
+                    _abilitiesToRemove.Add(ability);
+                }
+            }
+
             if (_abilitiesToRemove.Count > 0)
             {
                 foreach (var abilityModel in _abilitiesToRemove)
@@ -86,16 +95,7 @@ namespace Model
                 }
                 _abilitiesToRemove.Clear();
             }
-            
-            foreach (var ability in Abilities)
-            {
-                ability.UpdateTime();
-                if (ability.IsFinished)
-                {
-                    _abilitiesToRemove.Add(ability);
-                }
-            }
-            
+
             OnAbilitiesUpdate?.Invoke();
         }
     }

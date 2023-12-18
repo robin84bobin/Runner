@@ -10,9 +10,15 @@ namespace Services.GamePlay.GameplayInput
     public class StandaloneGameInputService : IGameInputService, ITickable
     {
         public event Action<Vector2> OnMoveDirection;
+        public event Action OnJump;
 
         public void Tick()
         {
+            if (Input.GetKey(KeyCode.Space))
+            {
+                OnJump?.Invoke();
+            }
+            
             ReadInputValues();
         }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Settings for gameplay
@@ -17,7 +18,8 @@ public class GameplayConfig : ScriptableObject
     [Header("InputConfig:")]
     public float SwipeTimeThreshold = 1f;
     public float SwipeDistanceThreshold = 0.8f;
-    public float MoveTime = 0.2f;
+    public float StrafeTime = 0.3f;
+    public float MoveVerticalTime = 0.8f;
 
     [Header("For Test")] 
     public bool horizontalMode = false;
