@@ -20,5 +20,6 @@ MonoBehaviour:
   RunTrailCount: 3
   SwipeTimeThreshold: 1
   SwipeDistanceThreshold: 0.8
-  MoveTime: 1
+  StrafeTime: 0.4
+  MoveVerticalTime: 0.8
   horizontalMode: 0

@@ -2,7 +2,7 @@ using Controllers.Bonuses;
 using Model;
 using UnityEngine;
 
-namespace Controllers.Hero
+namespace Controllers.Actor
 {
     /// <summary>
     /// Applies bonus if hits it by trigger collision 

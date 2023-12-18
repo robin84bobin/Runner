@@ -3,28 +3,31 @@ using TMPro;
 using UnityEngine;
 using Zenject;
 
-public class AbilitiesUIView : MonoBehaviour
+namespace UI
 {
-    [SerializeField] private TextMeshProUGUI _text;
-    private AbilityService _abilityService;
-
-    [Inject]
-    public void Construct(AbilityService abilityService)
+    public class AbilitiesUIView : MonoBehaviour
     {
-        _abilityService = abilityService;
-        _abilityService.OnAbilitiesUpdate += OnAbilityUpdate;
-    }
+        [SerializeField] private TextMeshProUGUI _text;
+        private AbilityService _abilityService;
 
-    private void OnAbilityUpdate()
-    {
-        string abilityText  = string.Empty;
-        foreach (var ability in _abilityService.Abilities)
+        [Inject]
+        public void Construct(AbilityService abilityService)
         {
-            abilityText += $"{ability.Data.title}: \n " +
-                           $"{string.Format(ability.Data.description, (int)ability.TotalSeconds)} \n";
+            _abilityService = abilityService;
+            _abilityService.OnAbilitiesUpdate += OnAbilityUpdate;
         }
 
-        _text.text = abilityText;
-    }
+        private void OnAbilityUpdate()
+        {
+            string abilityText  = string.Empty;
+            foreach (var ability in _abilityService.Abilities)
+            {
+                abilityText += $"{ability.Data.title}: \n " +
+                               $"{string.Format(ability.Data.description, (int)ability.TotalSeconds)} \n";
+            }
 
+            _text.text = abilityText;
+        }
+
+    }
 }

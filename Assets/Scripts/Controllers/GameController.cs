@@ -1,4 +1,4 @@
-using Controllers.Hero;
+using Controllers.Actor;
 using Controllers.Level.Parts;
 using Cysharp.Threading.Tasks;
 using Data.Catalog;

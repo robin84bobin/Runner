@@ -6,7 +6,7 @@ using Model;
 using Services.GamePlay.GameplayInput;
 using UnityEngine;
 
-namespace Controllers.Hero
+namespace Controllers.Actor
 {
     /// <summary>
     /// Applies hero moving via events from model and input
@@ -128,7 +128,7 @@ namespace Controllers.Hero
             _actorTransform.position = new Vector3(position.x, position.y, - value);
         }
         
-        private async UniTask SetHeightAsync(float value, float moveTime, CancellationToken cancellationToken)
+        private async UniTaskVoid SetHeightAsync(float value, float moveTime, CancellationToken cancellationToken)
         {
             var position = _actorTransform.position;
             var endHeight = -value;
@@ -138,6 +138,9 @@ namespace Controllers.Hero
             
             while (Math.Abs(endHeight - _actorTransform.position.z) > 0 )
             {
+                if (cancellationToken.IsCancellationRequested)
+                    return;
+                
                 float progress = (Time.time - startTime) / moveTime;
                 float height =  Mathf.Lerp(startHeight, endHeight, progress);
                 animator.SetFloat(HeightAnimParam, -height);
