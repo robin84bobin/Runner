@@ -1,5 +1,5 @@
-using Common;
-using Common.Commands;
+using Core.Common.Commands;
+using Core.Data;
 using Data.Catalog;
 using Services.Resources;
 using Startup.Startup;

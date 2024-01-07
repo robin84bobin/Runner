@@ -1,6 +1,6 @@
 using System;
 using System.Threading;
-using Common;
+using Core.Common;
 using Cysharp.Threading.Tasks;
 using Model;
 using Services.GamePlay.GameplayInput;
@@ -53,6 +53,7 @@ namespace Controllers.Actor
 
             _inputService.OnMoveDirection += ProcessStrafe;
             _inputService.OnJump += TestDropHeight;
+            
         }
 
         private void TestDropHeight()

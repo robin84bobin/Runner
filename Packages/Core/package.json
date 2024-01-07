@@ -1,0 +1,9 @@
+{
+    "name": "com.toybox.core",
+    "displayName": "Core",
+    "author": { "name": "toybox, Inc.", "url": "https://toybox.co.jp/en/" },
+    "version": "0.0.1",
+    "unity": "2018.4",
+    "description": "core code.",
+    "dependencies": {}
+}

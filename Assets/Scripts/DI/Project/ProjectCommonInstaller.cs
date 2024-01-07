@@ -1,5 +1,6 @@
-﻿using Data.Catalog;
-using Data.Proxy;
+﻿using Core.Data;
+using Core.Data.Proxy;
+using Data.Catalog;
 using Services.GamePlay;
 using Services.Resources;
 using UnityEngine;

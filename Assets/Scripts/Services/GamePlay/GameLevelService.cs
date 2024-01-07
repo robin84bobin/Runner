@@ -1,4 +1,4 @@
-﻿using Common;
+﻿using Core.Data;
 using Data.Catalog;
 using Services.Resources;
 

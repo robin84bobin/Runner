@@ -1,6 +1,6 @@
-using Common.Commands;
+using Core.Common.Commands;
+using Core.Data;
 using Cysharp.Threading.Tasks;
-using Data.Repository;
 
 namespace Startup.Startup
 {
