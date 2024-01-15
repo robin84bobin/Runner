@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Controllers.Bonuses
@@ -18,9 +19,17 @@ namespace Controllers.Bonuses
             BonusId = bonusId;
         }
 
-        public void OnApplied()
+        public async UniTask OnApplied()
         {
-            Destroy(gameObject);
+            var mesh = GetComponentInChildren<MeshRenderer>();
+            
+            for (float value = 0; value < 1; value += 0.01f)
+            {
+                if (mesh == null)
+                    return;
+                mesh.material.SetFloat("_Dissolve", value);
+                await UniTask.Yield();
+            }
         }
     }
 

@@ -1,6 +1,4 @@
-using System.Threading.Tasks;
 using Controllers.Bonuses;
-using Cysharp.Threading.Tasks;
 using Model;
 using UnityEngine;
 
@@ -14,7 +12,6 @@ namespace Controllers.Actor
         private AbilityService _abilityService;
         private ActorModel _actorModel;
         private BonusController _bonusController;
-        private IBonusController _iBonusController;
 
         public void Setup(AbilityService abilityService, ActorModel actorModel)
         {
@@ -30,7 +27,6 @@ namespace Controllers.Actor
         void ProcessCollision(GameObject otherGo)
         { 
             _bonusController = otherGo.GetComponent<BonusController>();
-            _iBonusController = _bonusController;
             _abilityService.ApplyAbilities(_bonusController.BonusId, _actorModel);
             
             _bonusController.OnApplied();

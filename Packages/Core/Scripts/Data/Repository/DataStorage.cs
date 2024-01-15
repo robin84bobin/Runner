@@ -13,19 +13,11 @@ namespace Core.Data.Repository
     public class DataStorage<T> : IDataStorage where T : DataItem, new()
     {
         public int Count => _items.Count;
-
         private bool ReadOnly { get; set; }
-
         public string CollectionName { get; private set; }
-
         private Dictionary<string, T> _items = new Dictionary<string, T>();
-        private IDataProxyService _dbProxyService;
-
-        public T this[string id]
-        {
-            get { return Get(id); }
-            set { Set(value); }
-        }
+        
+        private readonly IDataProxyService _dbProxyService;
 
         public DataStorage(string collectionName, IDataProxyService dbProxyService, bool readOnly = false)
         {
@@ -36,6 +28,12 @@ namespace Core.Data.Repository
 
             int[] arr = new int[5] { 1, 2, 3, 4, 5 };
             arr.Contains(4);
+        }
+
+        public T this[string id]
+        {
+            get => Get(id);
+            set => Set(value);
         }
 
         public void Remove(string id, bool now = false, Action<string> callback = null)
