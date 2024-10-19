@@ -1,5 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Controllers.Bonuses
 {
@@ -8,7 +12,10 @@ namespace Controllers.Bonuses
     /// </summary>
     public class BonusController : MonoBehaviour, IBonusController
     {
+        [SerializeField] private float dissolveSpeed = .01f;
         public string BonusId { get; private set; }
+        private const string Dissolve = "_Dissolve";
+        
         public bool CheckNull()
         {
             return this == null;
@@ -19,19 +26,25 @@ namespace Controllers.Bonuses
             BonusId = bonusId;
         }
 
-        public async UniTask<bool> OnApplied()
+        public void OnApplied()
+        {
+            StartCoroutine( ShowDissolveCoroutine());
+        }
+
+        private IEnumerator ShowDissolveCoroutine()
         {
             var mesh = GetComponentInChildren<MeshRenderer>();
-            
+            WaitForSeconds dissolveWaitForSeconds = new WaitForSeconds(dissolveSpeed);
             for (float value = 0; value < 1; value += 0.01f)
             {
                 if (mesh == null)
-                    return false;
-                mesh.material.SetFloat("_Dissolve", value);
-                await UniTask.Delay(2000);
+                    yield break;
+                
+                mesh.material.SetFloat(Dissolve, value);
+               
+                yield return dissolveWaitForSeconds;
             }
-
-            return true;
+            Destroy(gameObject);
         }
     }
 

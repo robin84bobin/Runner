@@ -26,13 +26,12 @@ namespace Controllers.Actor
             ProcessCollision(other.gameObject);
         }
 
-        async UniTask ProcessCollision(GameObject otherGo)
+        void ProcessCollision(GameObject otherGo)
         { 
             _bonusController = otherGo.GetComponent<BonusController>();
             _abilityService.ApplyAbilities(_bonusController.BonusId, _actorModel);
             
-            var r= await _bonusController.OnApplied();
-            Debug.Log(r);
+            _bonusController.OnApplied();
         }
     }
 }
