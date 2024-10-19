@@ -15,8 +15,8 @@ namespace Services.GamePlay
         private readonly IResourcesService _resourcesService;
         private string _levelId;
         
-        public string GetHeroPrefabName() => $"Hero{_levelId}";
-        public string GetPartPrefabName(string partId) => $"Part{_levelId} {partId}";
+        public string GetHeroPrefabName() => $"Level {_levelId}/Hero/Hero{_levelId}.prefab";
+        public string GetPartPrefabName(string partId) => $"Level {_levelId}/Part{_levelId} {partId}.prefab";
         public LevelData LevelData => _catalogDataRepository.Levels.Get(_levelId);
 
         public GameLevelService(CatalogDataRepository catalogDataRepository, IResourcesService resourcesService)

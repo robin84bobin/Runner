@@ -19,17 +19,19 @@ namespace Controllers.Bonuses
             BonusId = bonusId;
         }
 
-        public async UniTask OnApplied()
+        public async UniTask<bool> OnApplied()
         {
             var mesh = GetComponentInChildren<MeshRenderer>();
             
             for (float value = 0; value < 1; value += 0.01f)
             {
                 if (mesh == null)
-                    return;
+                    return false;
                 mesh.material.SetFloat("_Dissolve", value);
-                await UniTask.Yield();
+                await UniTask.Delay(2000);
             }
+
+            return true;
         }
     }
 

@@ -1,5 +1,7 @@
 using Controllers.Bonuses;
+using Cysharp.Threading.Tasks;
 using Model;
+using ModestTree;
 using UnityEngine;
 
 namespace Controllers.Actor
@@ -24,12 +26,13 @@ namespace Controllers.Actor
             ProcessCollision(other.gameObject);
         }
 
-        void ProcessCollision(GameObject otherGo)
+        async UniTask ProcessCollision(GameObject otherGo)
         { 
             _bonusController = otherGo.GetComponent<BonusController>();
             _abilityService.ApplyAbilities(_bonusController.BonusId, _actorModel);
             
-            _bonusController.OnApplied();
+            var r= await _bonusController.OnApplied();
+            Debug.Log(r);
         }
     }
 }

@@ -9,24 +9,24 @@ namespace Startup.Startup
     /// </summary>
     public class InitDataRepositoryCommand : Command
     {
-        private BaseDataRepository _baseDataRepository;
+        private BaseDataRepository _repository;
 
-        public InitDataRepositoryCommand(BaseDataRepository baseDataRepository)
+        public InitDataRepositoryCommand(BaseDataRepository repository)
         {
-            _baseDataRepository = baseDataRepository;
+            _repository = repository;
         }
         
         public override async UniTask Execute()
         {
-            _baseDataRepository.OnInitComplete += OnInitComplete;
-            _baseDataRepository.OnInitProgress += SetProgress;
-            await _baseDataRepository.Init();
+            _repository.OnInitComplete += OnInitComplete;
+            _repository.OnInitProgress += SetProgress;
+            await _repository.Init();
         }
 
         private void OnInitComplete()
         {
-            _baseDataRepository.OnInitProgress -= SetProgress;
-            _baseDataRepository.OnInitComplete -= OnInitComplete;
+            _repository.OnInitProgress -= SetProgress;
+            _repository.OnInitComplete -= OnInitComplete;
             Complete();
         }
     }

@@ -7,3 +7,4 @@ EditorBuildSettings:
   m_Scenes: []
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 582430a16db18464f83666d3f6ab758a, type: 2}
+  m_UseUCBPForAssetBundles: 0

@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTask.Editor", "UniTask.E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniTask.DOTween", "UniTask.DOTween.csproj", "{0a85520d-4e10-39b3-eddc-7aa156952478}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{abf72ad3-db04-db54-71e7-1d671dd66f39}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,8 +50,6 @@ Global
 		{1fecc6ee-d3d6-4fca-6329-079f950dd197}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0a85520d-4e10-39b3-eddc-7aa156952478}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0a85520d-4e10-39b3-eddc-7aa156952478}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{abf72ad3-db04-db54-71e7-1d671dd66f39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{abf72ad3-db04-db54-71e7-1d671dd66f39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

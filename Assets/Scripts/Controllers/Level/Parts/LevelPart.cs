@@ -35,7 +35,7 @@ namespace Controllers.Level.Parts
                 var spawnPointIndex = Random.Range(0, _bonusSpawnPoints.Length);
                 var spawnPoint = _bonusSpawnPoints[spawnPointIndex];
 
-                string assetKey = $"Bonus{bonusData.Id}";
+                string assetKey = $"LevelCommon/Bonus{bonusData.Id}.prefab";
                 var bonusGo = await resourcesService.Instantiate(
                     assetKey, 
                     spawnPoint.position, 

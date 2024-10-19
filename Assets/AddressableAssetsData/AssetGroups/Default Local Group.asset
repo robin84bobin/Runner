@@ -10,30 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: DefaultGroup
+  m_Name: Default Local Group
   m_EditorClassIdentifier: 
-  m_GroupName: DefaultGroup
-  m_Data:
-    m_SerializedData: []
-  m_GUID: 178248bb950cf604087a218a71480ff3
+  m_GroupName: Default Local Group
+  m_GUID: dd518399d8c0a984bb28ad1133bac442
   m_SerializeEntries:
+  - m_GUID: 22de1f71b080ddc41804f78bf075aa36
+    m_Address: MainMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2a91c23c67285634780dd2c367def006
+    m_Address: Level 3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3bde927a7cbf49042b9cdedefbf77b60
     m_Address: StartScene
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e1275cb2f8176d143a5cc82782992a10
-    m_Address: GameScene
+  - m_GUID: 3ce5e593f881290438c4b5be65fc0caa
+    m_Address: LevelCommon
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 893cf33d1f2754849a9634c05338497e
-    m_Address: CatalogData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 99c9720ab356a0642a771bea13969a05
-    m_Address: BootScene
+  - m_GUID: 557eb1df99ed7a54faebe11b1f2e6ccf
+    m_Address: Level 1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -42,8 +45,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: de6b6bda492a18846abe8b991a733018
-    m_Address: Assets/Resources/New Shader Graph.shadergraph
+  - m_GUID: 893cf33d1f2754849a9634c05338497e
+    m_Address: CatalogData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c680c3976363f424cba8f500b1def625
+    m_Address: Level 2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1275cb2f8176d143a5cc82782992a10
+    m_Address: GameScene
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -51,5 +64,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: d9f35f9a7f56ed445a58dc1bc0b87b1a, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 58695a352338cd840b668e369032e5e6, type: 2}
-    - {fileID: 11400000, guid: bac8e29d9394c5744a203fcbfcbe9710, type: 2}
+    - {fileID: 11400000, guid: 725b08a49c4a4f548b29ac82ccd12f11, type: 2}
+    - {fileID: 11400000, guid: 7a8b275afdeeb6140ae89c53fff255be, type: 2}
